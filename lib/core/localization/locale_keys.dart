@@ -77,4 +77,44 @@ abstract final class LocaleKeys {
   static const String onboardingTitle = 'onboarding.title';
   static const String onboardingDescription = 'onboarding.description';
   static const String onboardingGetStarted = 'onboarding.get_started';
+
+  // Home Screen
+  static const String homeGreeting = 'home.greeting';
+  static const String homeSubtitle = 'home.subtitle';
+  static const String homeActionFacebookTitle = 'home.action_facebook_title';
+  static const String homeActionFacebookDesc = 'home.action_facebook_desc';
+  static const String homeActionTiktokTitle = 'home.action_tiktok_title';
+  static const String homeActionTiktokDesc = 'home.action_tiktok_desc';
+  static const String homeActionWhatsappTitle = 'home.action_whatsapp_title';
+  static const String homeActionWhatsappDesc = 'home.action_whatsapp_desc';
+  static const String homeActionInstagramTitle = 'home.action_instagram_title';
+  static const String homeActionInstagramDesc = 'home.action_instagram_desc';
+  static const String homeSectionOtherTools = 'home.section_other_tools';
+  static const String homeToolHistoryTitle = 'home.tool_history_title';
+  static const String homeToolHistoryDesc = 'home.tool_history_desc';
+  static const String homeToolFavoritesTitle = 'home.tool_favorites_title';
+  static const String homeToolFavoritesDesc = 'home.tool_favorites_desc';
+  static const String homeToolSettingsTitle = 'home.tool_settings_title';
+  static const String homeToolSettingsDesc = 'home.tool_settings_desc';
+  static const String homeBannerBadge = 'home.banner_badge';
+  static const String homeBannerTitle = 'home.banner_title';
+  static const String homeBannerSubtitle = 'home.banner_subtitle';
+  static const String homeBannerCta = 'home.banner_cta';
+
+  static const String homeSectionTrending = 'home.section_trending';
+  static const String homeTemplateFlashSale = 'home.template_flash_sale';
+  static const String homeTemplateNewProduct = 'home.template_new_product';
+  static const String homeTemplateSocialProof = 'home.template_social_proof';
+  static const String homeTemplateDiscount = 'home.template_discount';
+  static const String homeSectionRecentActivity = 'home.section_recent_activity';
+  static const String homeRecentAdFbTitle = 'home.recent_ad_fb_title';
+  static const String homeRecentAdFbTime = 'home.recent_ad_fb_time';
+  static const String homeRecentAdTiktokTitle = 'home.recent_ad_tiktok_title';
+  static const String homeRecentAdTiktokTime = 'home.recent_ad_tiktok_time';
+  static const String homeRecentAdInstaTitle = 'home.recent_ad_insta_title';
+  static const String homeRecentAdInstaTime = 'home.recent_ad_insta_time';
+  static const String homeStatusReady = 'home.status_ready';
+  static const String homeStatusDraft = 'home.status_draft';
+  static const String homeViewAll = 'home.view_all';
 }
+

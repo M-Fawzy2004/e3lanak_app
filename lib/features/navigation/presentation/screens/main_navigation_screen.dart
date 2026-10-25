@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e3lanak_app/features/home/presentation/screens/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,11 +21,12 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   static const List<Widget> _tabs = [
-    FeedScreenPlaceholder(),
+    HomeScreen(),
     ExploreScreenPlaceholder(),
     MyAdsScreenPlaceholder(),
     ProfileScreenPlaceholder(),
   ];
+
 
   static const List<_NavigationDestination> _destinations = [
     _NavigationDestination(icon: Iconsax.home_2, labelKey: LocaleKeys.navHome),

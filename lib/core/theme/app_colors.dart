@@ -32,7 +32,8 @@ abstract final class AppColors {
   static const Color textSecondary = Color(0xFF64748B);
 
   // Background & Surface
-  static const Color background = Color(0xFFF8FAFC);
+  static const Color background = Colors.white;
+  static const Color feedBackground = Color.fromARGB(255, 255, 255, 255);
   static const Color surface = Colors.white;
   static const Color border = Color(0xFFE2E8F0);
   static const Color divider = Color(0xFFE2E8F0);
@@ -82,10 +83,7 @@ abstract final class AppColors {
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Color(0xFF0946C2),
-      Color(0xFF0D5EF4),
-    ],
+    colors: [Color(0xFF0946C2), Color(0xFF0D5EF4)],
   );
 
   static const LinearGradient splashGradient = LinearGradient(
@@ -101,19 +99,13 @@ abstract final class AppColors {
   static const LinearGradient accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Color(0xFFFFB800),
-      Color(0xFFFFA500),
-    ],
+    colors: [Color(0xFFFFB800), Color(0xFFFFA500)],
   );
 
   /// Dark Mode Card Gradient
   static const LinearGradient darkCardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Color(0xFF1E293B),
-      Color(0xFF0F172A),
-    ],
+    colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
   );
 }
