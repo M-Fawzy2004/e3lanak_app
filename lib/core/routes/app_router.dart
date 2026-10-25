@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/feed/presentation/screens/home_screen.dart';
+import '../../features/navigation/presentation/screens/main_navigation_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../localization/language_manager.dart';
@@ -13,7 +13,8 @@ abstract final class AppRouter {
     final Widget screen = switch (settings.name) {
       AppRoutes.splash => const SplashScreen(),
       AppRoutes.onboarding => const OnboardingScreen(),
-      AppRoutes.home => const HomeScreen(),
+      AppRoutes.main => const MainNavigationScreen(),
+      AppRoutes.home => const MainNavigationScreen(),
       _ => const _RouteNotFoundScreen(),
     };
 
@@ -31,9 +32,10 @@ abstract final class AppRouter {
           final isRtl = LanguageManager.isRtl(context);
           final beginOffset = isRtl ? const Offset(1, 0) : const Offset(-1, 0);
           final slideAnimation = animation.drive(
-            Tween<Offset>(begin: beginOffset, end: Offset.zero).chain(
-              CurveTween(curve: Curves.easeOutCubic),
-            ),
+            Tween<Offset>(
+              begin: beginOffset,
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeOutCubic)),
           );
 
           return SlideTransition(

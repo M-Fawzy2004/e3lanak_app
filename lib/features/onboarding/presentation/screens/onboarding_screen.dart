@@ -122,7 +122,7 @@ class OnboardingScreen extends StatelessWidget {
                           child:
                               _SwipeToStartButton(
                                     onCompleted: () => Navigator.of(context)
-                                        .pushReplacementNamed(AppRoutes.home),
+                                        .pushReplacementNamed(AppRoutes.main),
                                   )
                                   .animate(delay: 330.ms)
                                   .fadeIn(duration: 450.ms)
