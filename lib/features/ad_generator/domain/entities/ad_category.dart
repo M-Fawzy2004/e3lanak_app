@@ -5,12 +5,14 @@ class AdCategory {
   final String id;
   final String titleKey;
   final IconData icon;
+  final String? imageUrl;
   final bool isCustom;
 
   const AdCategory({
     required this.id,
     required this.titleKey,
     required this.icon,
+    this.imageUrl,
     this.isCustom = false,
   });
 

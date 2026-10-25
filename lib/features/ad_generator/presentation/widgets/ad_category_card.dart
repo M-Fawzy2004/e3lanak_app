@@ -32,7 +32,7 @@ class AdCategoryCard extends StatelessWidget {
       curve: Curves.easeOutCubic,
       decoration: BoxDecoration(
         color: isSelected ? AppColors.primarySurface : AppColors.white,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(14.r),
         border: Border.all(
           color: isSelected ? AppColors.primary : AppColors.border,
           width: isSelected ? 1.8 : 1.2,
@@ -41,56 +41,84 @@ class AdCategoryCard extends StatelessWidget {
             ? [
                 BoxShadow(
                   color: AppColors.primary.withValues(alpha: 0.16),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
                 ),
               ]
             : [
                 BoxShadow(
                   color: AppColors.black.withValues(alpha: 0.02),
-                  blurRadius: 6,
+                  blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
               ],
       ),
       child: Material(
         color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(14.r),
         child: InkWell(
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(14.r),
           onTap: () {
             unawaited(HapticFeedback.selectionClick());
             onTap();
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
+            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Icon with subtle animated scale on selection
+                // Icon or Image with subtle animated scale on selection
                 AnimatedScale(
-                  scale: isSelected ? 1.12 : 1.0,
-                  duration: const Duration(milliseconds: 260),
+                  scale: isSelected ? 1.08 : 1.0,
+                  duration: const Duration(milliseconds: 240),
                   curve: Curves.easeOutBack,
                   child: Container(
-                    width: 46.w,
-                    height: 46.w,
+                    width: 38.w,
+                    height: 38.w,
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.primary
                           : AppColors.slate100,
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Center(
-                      child: Icon(
-                        category.icon,
-                        size: 24.sp,
-                        color: isSelected ? AppColors.white : AppColors.darkNeutral,
-                      ),
+                      child: category.imageUrl != null
+                          ? Image.network(
+                              category.imageUrl!,
+                              width: 24.w,
+                              height: 24.w,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
+                                category.icon,
+                                size: 19.sp,
+                                color: isSelected
+                                    ? AppColors.white
+                                    : AppColors.darkNeutral,
+                              ),
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Icon(
+                                  category.icon,
+                                  size: 19.sp,
+                                  color: isSelected
+                                      ? AppColors.white
+                                      : AppColors.slate400,
+                                );
+                              },
+                            )
+                          : Icon(
+                              category.icon,
+                              size: 19.sp,
+                              color: isSelected
+                                  ? AppColors.white
+                                  : AppColors.darkNeutral,
+                            ),
                     ),
                   ),
                 ),
-                Gap(10.h),
+                Gap(6.h),
 
                 // Category Title
                 Text(
@@ -102,10 +130,10 @@ class AdCategoryCard extends StatelessWidget {
                         color: isSelected
                             ? AppColors.primary
                             : AppColors.darkNeutral,
-                        fontSize: 12.5.sp,
+                        fontSize: 11.sp,
                         fontWeight:
                             isSelected ? FontWeight.w800 : FontWeight.w600,
-                        height: 1.25,
+                        height: 1.2,
                       ),
                 ),
               ],

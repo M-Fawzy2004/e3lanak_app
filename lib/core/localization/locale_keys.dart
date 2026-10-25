@@ -109,12 +109,22 @@ abstract final class LocaleKeys {
   static const String adSectionCategories = 'ad_generator.section_categories';
   static const String adCatElectronics = 'ad_generator.cat_electronics';
   static const String adCatClothing = 'ad_generator.cat_clothing';
+  static const String adCatCars = 'ad_generator.cat_cars';
+  static const String adCatRealEstate = 'ad_generator.cat_real_estate';
   static const String adCatRestaurants = 'ad_generator.cat_restaurants';
-  static const String adCatServices = 'ad_generator.cat_services';
   static const String adCatFurniture = 'ad_generator.cat_furniture';
   static const String adCatBeauty = 'ad_generator.cat_beauty';
-  static const String adCatCustomHint = 'ad_generator.cat_custom_hint';
+  static const String adCatHomeAppliances = 'ad_generator.cat_home_appliances';
+  static const String adCatSports = 'ad_generator.cat_sports';
+  static const String adCatServices = 'ad_generator.cat_services';
+  static const String adCatAccessories = 'ad_generator.cat_accessories';
+  static const String adCatKids = 'ad_generator.cat_kids';
+  static const String adCatPets = 'ad_generator.cat_pets';
+  static const String adCatHealth = 'ad_generator.cat_health';
+  static const String adCatEducation = 'ad_generator.cat_education';
   static const String adCatOther = 'ad_generator.cat_other';
+  static const String adCatOtherLabel = 'ad_generator.cat_other_label';
+  static const String adCatCustomHint = 'ad_generator.cat_custom_hint';
   static const String adSelectCategoryRequired =
       'ad_generator.select_category_required';
   static const String adGenerateAiAd = 'ad_generator.generate_ai_ad';

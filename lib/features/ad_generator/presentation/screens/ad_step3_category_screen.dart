@@ -27,31 +27,91 @@ class AdStep3CategoryScreen extends StatelessWidget {
       id: 'electronics',
       titleKey: LocaleKeys.adCatElectronics,
       icon: Iconsax.mobile,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/644/644458.png',
     ),
     AdCategory(
       id: 'clothing',
       titleKey: LocaleKeys.adCatClothing,
       icon: Iconsax.shop,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/892/892458.png',
+    ),
+    AdCategory(
+      id: 'cars',
+      titleKey: LocaleKeys.adCatCars,
+      icon: Iconsax.car,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/3202/3202926.png',
+    ),
+    AdCategory(
+      id: 'real_estate',
+      titleKey: LocaleKeys.adCatRealEstate,
+      icon: Iconsax.buildings_2,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/609/609803.png',
     ),
     AdCategory(
       id: 'restaurants',
       titleKey: LocaleKeys.adCatRestaurants,
       icon: Iconsax.coffee,
-    ),
-    AdCategory(
-      id: 'services',
-      titleKey: LocaleKeys.adCatServices,
-      icon: Iconsax.setting_2,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/1046/1046784.png',
     ),
     AdCategory(
       id: 'furniture',
       titleKey: LocaleKeys.adCatFurniture,
       icon: Iconsax.home_2,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/2663/2663149.png',
     ),
     AdCategory(
       id: 'beauty',
       titleKey: LocaleKeys.adCatBeauty,
       icon: Iconsax.heart,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/3163/3163195.png',
+    ),
+    AdCategory(
+      id: 'home_appliances',
+      titleKey: LocaleKeys.adCatHomeAppliances,
+      icon: Iconsax.lamp_on,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/3659/3659898.png',
+    ),
+    AdCategory(
+      id: 'sports',
+      titleKey: LocaleKeys.adCatSports,
+      icon: Iconsax.activity,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/2964/2964514.png',
+    ),
+    AdCategory(
+      id: 'services',
+      titleKey: LocaleKeys.adCatServices,
+      icon: Iconsax.setting_2,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/1063/1063376.png',
+    ),
+    AdCategory(
+      id: 'accessories',
+      titleKey: LocaleKeys.adCatAccessories,
+      icon: Iconsax.watch,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/2972/2972531.png',
+    ),
+    AdCategory(
+      id: 'kids',
+      titleKey: LocaleKeys.adCatKids,
+      icon: Iconsax.game,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/3082/3082060.png',
+    ),
+    AdCategory(
+      id: 'pets',
+      titleKey: LocaleKeys.adCatPets,
+      icon: Iconsax.pet,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/616/616408.png',
+    ),
+    AdCategory(
+      id: 'health',
+      titleKey: LocaleKeys.adCatHealth,
+      icon: Iconsax.hospital,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/2966/2966327.png',
+    ),
+    AdCategory(
+      id: 'education',
+      titleKey: LocaleKeys.adCatEducation,
+      icon: Iconsax.book,
+      imageUrl: 'https://cdn-icons-png.flaticon.com/128/2702/2702134.png',
     ),
   ];
 
@@ -161,16 +221,16 @@ class _AdStep3CategoryView extends StatelessWidget {
                         ),
                         Gap(12.h),
 
-                        // 3x2 Grid of Animated Category Cards
+                        // Compact Grid of Animated Category Cards
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            mainAxisSpacing: 12.h,
-                            crossAxisSpacing: 12.w,
-                            childAspectRatio: 0.88,
+                            mainAxisSpacing: 10.h,
+                            crossAxisSpacing: 10.w,
+                            childAspectRatio: 1.05,
                           ),
                           itemCount:
                               AdStep3CategoryScreen._predefinedCategories.length,
@@ -183,7 +243,8 @@ class _AdStep3CategoryView extends StatelessWidget {
                             return AdCategoryCard(
                               category: category,
                               isSelected: isSelected,
-                              animationDelay: Duration(milliseconds: index * 60),
+                              animationDelay:
+                                  Duration(milliseconds: (index % 6) * 40),
                               onTap: () => cubit.selectCategory(category.id),
                             );
                           },

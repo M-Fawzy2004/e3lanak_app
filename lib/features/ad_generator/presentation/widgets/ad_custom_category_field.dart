@@ -61,111 +61,142 @@ class _AdCustomCategoryFieldState extends State<AdCustomCategoryField> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOutCubic,
-      height: 54.h,
-      decoration: BoxDecoration(
-        color: widget.isActive ? AppColors.primarySurface : AppColors.white,
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(
-          color: widget.isActive ? AppColors.primary : AppColors.border,
-          width: widget.isActive ? 1.8 : 1.2,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Label
+        Text(
+          tr(LocaleKeys.adCatOtherLabel),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: AppColors.darkNeutral,
+                fontSize: 13.5.sp,
+                fontWeight: FontWeight.w700,
+              ),
         ),
-        boxShadow: widget.isActive
-            ? [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.12),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ]
-            : [
-                BoxShadow(
-                  color: AppColors.black.withValues(alpha: 0.02),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-      ),
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(14.r),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(14.r),
-          onTap: () {
-            unawaited(HapticFeedback.selectionClick());
-            widget.onTap();
-            _focusNode.requestFocus();
-          },
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.w),
-            child: Row(
-              children: [
-                // Badge icon
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                  decoration: BoxDecoration(
-                    color: widget.isActive
-                        ? AppColors.primary
-                        : AppColors.slate100,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Iconsax.add,
-                        size: 14.sp,
-                        color: widget.isActive
-                            ? AppColors.white
-                            : AppColors.darkNeutral,
-                      ),
-                      Gap(4.w),
-                      Text(
-                        tr(LocaleKeys.adCatOther),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: widget.isActive
-                                  ? AppColors.white
-                                  : AppColors.darkNeutral,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Gap(10.w),
+        Gap(8.h),
 
-                // Text field
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    onTap: widget.onTap,
-                    onChanged: widget.onChanged,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.darkNeutral,
-                          fontSize: 13.5.sp,
-                          fontWeight: FontWeight.w600,
+        // Text field container matching Step 2 design
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          height: 52.h,
+          decoration: BoxDecoration(
+            color: widget.isActive
+                ? AppColors.primarySurface.withValues(alpha: 0.35)
+                : AppColors.white,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(
+              color: widget.isActive ? AppColors.primary : AppColors.border,
+              width: widget.isActive ? 1.6 : 1.2,
+            ),
+            boxShadow: widget.isActive
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.12),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ]
+                : [
+                    BoxShadow(
+                      color: AppColors.black.withValues(alpha: 0.02),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+          ),
+          child: Material(
+            color: AppColors.transparent,
+            borderRadius: BorderRadius.circular(12.r),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12.r),
+              onTap: () {
+                unawaited(HapticFeedback.selectionClick());
+                widget.onTap();
+                _focusNode.requestFocus();
+              },
+              child: Row(
+                children: [
+                  // Prefix Icon Container
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: 12.w,
+                      end: 10.w,
+                    ),
+                    child: Container(
+                      width: 32.w,
+                      height: 32.w,
+                      decoration: BoxDecoration(
+                        color: widget.isActive
+                            ? AppColors.primary
+                            : AppColors.slate100,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Iconsax.edit_2,
+                          size: 16.sp,
+                          color: widget.isActive
+                              ? AppColors.white
+                              : AppColors.darkNeutral,
                         ),
-                    decoration: InputDecoration(
-                      hintText: tr(LocaleKeys.adCatCustomHint),
-                      hintStyle:
-                          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: AppColors.slate400,
-                                fontSize: 13.sp,
-                              ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
+                      ),
                     ),
                   ),
-                ),
-              ],
+
+                  // Text Field
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      onTap: () {
+                        widget.onTap();
+                        _focusNode.requestFocus();
+                      },
+                      onChanged: (val) {
+                        setState(() {});
+                        widget.onChanged(val);
+                      },
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppColors.darkNeutral,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                      decoration: InputDecoration(
+                        hintText: tr(LocaleKeys.adCatCustomHint),
+                        hintStyle:
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.slate400,
+                                  fontSize: 13.sp,
+                                ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+
+                  // Optional clear button
+                  if (_controller.text.isNotEmpty && widget.isActive)
+                    IconButton(
+                      icon: Icon(
+                        Icons.close_rounded,
+                        size: 18.sp,
+                        color: AppColors.slate400,
+                      ),
+                      onPressed: () {
+                        _controller.clear();
+                        setState(() {});
+                        widget.onChanged('');
+                      },
+                    )
+                  else
+                    Gap(12.w),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     )
         .animate()
         .fadeIn(
