@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/locale_keys.dart';
@@ -36,7 +39,7 @@ class OnboardingScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(
                       16.w,
-                      20.h,
+                      25.h,
                       16.w,
                       25.h,
                     ),
@@ -69,7 +72,7 @@ class OnboardingScreen extends StatelessWidget {
                                         curve: Curves.easeOutCubic,
                                       ),
                             ),
-                            SizedBox(height: 25.h),
+                            SizedBox(height: 30.h),
                             Text(
                                   tr(LocaleKeys.onboardingTitle),
                                   textAlign: TextAlign.center,
@@ -88,7 +91,7 @@ class OnboardingScreen extends StatelessWidget {
                                   duration: 500.ms,
                                   curve: Curves.easeOutCubic,
                                 ),
-                            SizedBox(height: 10.h),
+                            SizedBox(height: 15.h),
                             Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 8.w,
@@ -155,26 +158,16 @@ class _SwipeToStartButton extends StatefulWidget {
 class _SwipeToStartButtonState extends State<_SwipeToStartButton>
     with SingleTickerProviderStateMixin {
   static const double _completeThreshold = 0.8;
+  static const Duration _settleDuration = Duration(milliseconds: 250);
 
-  double _progress = 0;
   bool _completed = false;
 
   late final AnimationController _controller;
-  Animation<double>? _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(
-          vsync: this,
-          duration: const Duration(milliseconds: 250),
-        )..addListener(() {
-          final animation = _animation;
-          if (animation != null) {
-            setState(() => _progress = animation.value);
-          }
-        });
+    _controller = AnimationController(vsync: this, duration: _settleDuration);
   }
 
   @override
@@ -183,53 +176,76 @@ class _SwipeToStartButtonState extends State<_SwipeToStartButton>
     super.dispose();
   }
 
-  void _animateTo(double target, {VoidCallback? onDone}) {
-    _animation = Tween<double>(
-      begin: _progress,
-      end: target,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-    _controller
-      ..reset()
-      ..forward().whenComplete(() => onDone?.call());
-  }
-
   void _onDragUpdate(DragUpdateDetails details, double maxDrag, bool isRtl) {
     if (_completed || maxDrag <= 0) return;
     _controller.stop();
     final delta = isRtl ? -details.delta.dx : details.delta.dx;
-    setState(() {
-      _progress = (_progress + delta / maxDrag).clamp(0.0, 1.0).toDouble();
-    });
+    _controller.value = (_controller.value + delta / maxDrag)
+        .clamp(0.0, 1.0)
+        .toDouble();
   }
 
-  void _onDragEnd(DragEndDetails details) {
+  Future<void> _complete() async {
     if (_completed) return;
-    if (_progress >= _completeThreshold) {
-      _completed = true;
-      HapticFeedback.mediumImpact();
-      _animateTo(1.0, onDone: widget.onCompleted);
-    } else {
-      _animateTo(0.0);
+    _completed = true;
+    unawaited(HapticFeedback.mediumImpact());
+    await _controller.animateTo(
+      1,
+      duration: _settleDuration,
+      curve: Curves.easeOutCubic,
+    );
+    if (mounted) widget.onCompleted();
+  }
+
+  Future<void> _onDragEnd(DragEndDetails details) async {
+    if (_completed) return;
+
+    if (_controller.value >= _completeThreshold) {
+      await _complete();
+      return;
     }
+
+    await _controller.animateBack(
+      0,
+      duration: _settleDuration,
+      curve: Curves.easeOutCubic,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final isRtl = LanguageManager.isRtl(context);
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.sizeOf(context).height;
     final buttonHeight = (screenHeight * 0.07).clamp(56.0, 72.0).toDouble();
     const padding = 7.0;
     final knobSize = buttonHeight - padding * 2;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final maxDrag = constraints.maxWidth - knobSize - padding * 2;
-        final knobOffset = _progress * maxDrag;
+        final maxDrag = (constraints.maxWidth - knobSize - padding * 2)
+            .clamp(0.0, double.infinity)
+            .toDouble();
+        final label = Padding(
+          padding: EdgeInsets.symmetric(horizontal: knobSize + 16),
+          child: ExcludeSemantics(
+            child: Text(
+              tr(LocaleKeys.onboardingGetStarted),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.tajawal(
+                fontSize: 16.sp.clamp(14.0, 20.0).toDouble(),
+                fontWeight: FontWeight.w700,
+                color: AppColors.white,
+              ),
+            ),
+          ),
+        );
 
         return Semantics(
           button: true,
           label: tr(LocaleKeys.onboardingGetStarted),
-          onTap: widget.onCompleted,
+          onTap: _complete,
           child: Container(
             width: double.infinity,
             height: buttonHeight,
@@ -237,54 +253,45 @@ class _SwipeToStartButtonState extends State<_SwipeToStartButton>
               gradient: AppColors.primaryGradient,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Opacity(
-                  opacity: (1 - _progress * 1.4).clamp(0.0, 1.0).toDouble(),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: knobSize + 16),
-                    child: ExcludeSemantics(
-                      child: Text(
-                        tr(LocaleKeys.onboardingGetStarted),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.tajawal(
-                          fontSize: 16.sp.clamp(14.0, 20.0).toDouble(),
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.white,
+            child: AnimatedBuilder(
+              animation: _controller,
+              child: label,
+              builder: (context, label) {
+                final progress = _controller.value;
+
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Opacity(
+                      opacity: (1 - progress * 1.4).clamp(0.0, 1.0).toDouble(),
+                      child: label,
+                    ),
+                    PositionedDirectional(
+                      start: padding + progress * maxDrag,
+                      top: padding,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onHorizontalDragUpdate: (details) =>
+                            _onDragUpdate(details, maxDrag, isRtl),
+                        onHorizontalDragEnd: _onDragEnd,
+                        child: Container(
+                          width: knobSize,
+                          height: knobSize,
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Icon(
+                            isRtl ? Iconsax.arrow_left : Iconsax.arrow_right,
+                            color: AppColors.primary,
+                            size: knobSize * 0.3,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                PositionedDirectional(
-                  start: padding + knobOffset,
-                  top: padding,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onHorizontalDragUpdate: (d) =>
-                        _onDragUpdate(d, maxDrag, isRtl),
-                    onHorizontalDragEnd: _onDragEnd,
-                    child: Container(
-                      width: knobSize,
-                      height: knobSize,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Icon(
-                        isRtl
-                            ? Icons.arrow_forward_ios_rounded
-                            : Icons.arrow_back_ios_rounded,
-                        color: AppColors.primary,
-                        size: knobSize * 0.3,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
           ),
         );
