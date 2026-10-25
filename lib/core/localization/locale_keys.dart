@@ -26,11 +26,20 @@ abstract final class LocaleKeys {
 
   // Navigation
   static const String navHome = 'navigation.home';
+  static const String navExplore = 'navigation.explore';
+  static const String navMyAds = 'navigation.my_ads';
+  static const String navProfile = 'navigation.profile';
   static const String navAdGenerator = 'navigation.ad_generator';
   static const String navFeed = 'navigation.feed';
   static const String navHistory = 'navigation.history';
   static const String navSubscription = 'navigation.subscription';
   static const String navSettings = 'navigation.settings';
+  static const String navigationComingSoon = 'navigation.coming_soon';
+  static const String createActionsTitle = 'navigation.create_actions_title';
+  static const String createAiAd = 'navigation.create_ai_ad';
+  static const String publishDirectAd = 'navigation.publish_direct_ad';
+  static const String creationFeatureComingSoon =
+      'navigation.creation_feature_coming_soon';
 
   // Ad Generator Steps & Actions
   static const String adStepUpload = 'ad_generator.step_upload';
@@ -46,7 +55,8 @@ abstract final class LocaleKeys {
   static const String adSelectFromGallery = 'ad_generator.select_from_gallery';
   static const String adTakePhoto = 'ad_generator.take_photo';
   static const String adProductNameHint = 'ad_generator.product_name_hint';
-  static const String adProductDescHint = 'ad_generator.product_description_hint';
+  static const String adProductDescHint =
+      'ad_generator.product_description_hint';
   static const String adProductPriceHint = 'ad_generator.product_price_hint';
 
   static const String adTonePersuasive = 'ad_generator.tone_persuasive';

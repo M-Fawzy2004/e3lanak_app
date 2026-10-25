@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/brand_loading_indicator.dart';
@@ -34,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       return Supabase.instance.client.auth.currentSession == null
           ? AppRoutes.onboarding
-          : AppRoutes.home;
+          : AppRoutes.main;
     } catch (_) {
       return AppRoutes.onboarding;
     }

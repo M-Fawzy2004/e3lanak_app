@@ -24,11 +24,19 @@
   },
   "navigation": {
     "home": "Home",
+    "explore": "Explore",
+    "my_ads": "My Ads",
+    "profile": "Profile",
     "ad_generator": "Create Ad",
     "feed": "Community",
     "history": "History",
     "subscription": "Subscription",
-    "settings": "Settings"
+    "settings": "Settings",
+    "coming_soon": "We’re getting this section ready. More coming soon.",
+    "create_actions_title": "Start a new ad",
+    "create_ai_ad": "Create an AI ad",
+    "publish_direct_ad": "Publish a direct ad",
+    "creation_feature_coming_soon": "This feature will be available soon."
   },
   "ad_generator": {
     "step_upload": "Upload Images",

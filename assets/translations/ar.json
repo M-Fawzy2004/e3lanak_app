@@ -24,11 +24,19 @@
   },
   "navigation": {
     "home": "الرئيسية",
+    "explore": "استكشف",
+    "my_ads": "إعلاناتي",
+    "profile": "حسابي",
     "ad_generator": "إنشاء إعلان",
     "feed": "المجتمع",
     "history": "السجل",
     "subscription": "الاشتراكات",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "coming_soon": "نعمل على تجهيز هذا القسم، ترقّب المزيد قريبًا.",
+    "create_actions_title": "ابدأ إعلانًا جديدًا",
+    "create_ai_ad": "إنشاء إعلان بالذكاء الاصطناعي",
+    "publish_direct_ad": "نشر إعلان مباشر",
+    "creation_feature_coming_soon": "الميزة دي هتكون متاحة قريبًا."
   },
   "ad_generator": {
     "step_upload": "رفع الصور",
