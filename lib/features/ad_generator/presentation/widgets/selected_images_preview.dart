@@ -56,10 +56,7 @@ class SelectedImagesPreview extends StatelessWidget {
                     child: SizedBox(
                       height: slotWidth,
                       child: i < images.length
-                          ? _buildImageThumbnail(
-                              image: images[i],
-                              index: i,
-                            )
+                          ? _buildImageThumbnail(image: images[i], index: i)
                           : _buildEmptySlot(),
                     ),
                   ),
@@ -72,10 +69,7 @@ class SelectedImagesPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildImageThumbnail({
-    required AdImage image,
-    required int index,
-  }) {
+  Widget _buildImageThumbnail({required AdImage image, required int index}) {
     return Stack(
       clipBehavior: Clip.none,
       children: [

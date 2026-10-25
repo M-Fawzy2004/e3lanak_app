@@ -11,6 +11,7 @@ enum AdStep1Notice {
   galleryFailed,
   cameraFailed,
   nextStepUnavailable,
+  stepCompleted,
 }
 
 class AdStep1State {

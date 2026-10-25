@@ -6,11 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
-
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/locale_keys.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_top_snack_bar.dart';
 import '../controllers/ad_step1_cubit.dart';
@@ -52,10 +51,7 @@ class _AdStep1UploadView extends StatelessWidget {
           message: tr(LocaleKeys.adMaxImagesLimit),
         );
       case AdStep1Notice.imagesAddedSuccessfully:
-        AppSnackBar.showSuccess(
-          context,
-          message: tr(LocaleKeys.adImagesAdded),
-        );
+        AppSnackBar.showSuccess(context, message: tr(LocaleKeys.adImagesAdded));
       case AdStep1Notice.photoCapturedSuccessfully:
         AppSnackBar.showSuccess(
           context,
@@ -71,16 +67,12 @@ class _AdStep1UploadView extends StatelessWidget {
           context,
           message: tr(LocaleKeys.adNextStepUnavailable),
         );
+      case AdStep1Notice.stepCompleted:
+        Navigator.of(context).pushNamed(AppRoutes.adGeneratorStep2);
       case AdStep1Notice.galleryFailed:
-        AppSnackBar.showError(
-          context,
-          message: tr(LocaleKeys.adGalleryError),
-        );
+        AppSnackBar.showError(context, message: tr(LocaleKeys.adGalleryError));
       case AdStep1Notice.cameraFailed:
-        AppSnackBar.showError(
-          context,
-          message: tr(LocaleKeys.adCameraError),
-        );
+        AppSnackBar.showError(context, message: tr(LocaleKeys.adCameraError));
       case AdStep1Notice.none:
         break;
     }
@@ -122,14 +114,11 @@ class _AdStep1UploadView extends StatelessWidget {
                         // Title
                         Text(
                           tr(LocaleKeys.adStep1Title),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
+                          style: Theme.of(context).textTheme.headlineSmall
                               ?.copyWith(
                                 color: AppColors.darkNeutral,
-                                fontSize: 22.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w800,
-                                letterSpacing: -0.3,
                               ),
                         ),
                         Gap(8.h),
@@ -137,14 +126,12 @@ class _AdStep1UploadView extends StatelessWidget {
                         // Subtitle
                         Text(
                           tr(LocaleKeys.adStep1Subtitle),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
+                          style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: AppColors.textSecondary,
                                 fontSize: 13.5.sp,
                                 fontWeight: FontWeight.w500,
-                                height: 1.45,
+                                height: 1,
                               ),
                         ),
                         Gap(20.h),
@@ -204,7 +191,7 @@ class _AdStep1UploadView extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(8.w),
                 child: Icon(
-                  isRtl ? Iconsax.arrow_right_3 : Iconsax.arrow_left_2,
+                  isRtl ? Icons.arrow_back_ios : Icons.arrow_forward_ios,
                   size: 22.sp,
                   color: AppColors.darkNeutral,
                 ),
@@ -231,16 +218,7 @@ class _AdStep1UploadView extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, -3),
-          ),
-        ],
-      ),
+      decoration: const BoxDecoration(color: AppColors.white),
       child: Material(
         color: AppColors.primary,
         borderRadius: BorderRadius.circular(14.r),
@@ -259,27 +237,18 @@ class _AdStep1UploadView extends StatelessWidget {
                     height: 22.w,
                     child: const CircularProgressIndicator(
                       strokeWidth: 2.2,
-                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.white,
+                      ),
                     ),
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        tr(LocaleKeys.next),
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: AppColors.white,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      Gap(8.w),
-                      Icon(
-                        isRtl ? Iconsax.arrow_left : Iconsax.arrow_right,
-                        size: 18.sp,
-                        color: AppColors.white,
-                      ),
-                    ],
+                : Text(
+                    tr(LocaleKeys.next),
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: AppColors.white,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
           ),
         ),

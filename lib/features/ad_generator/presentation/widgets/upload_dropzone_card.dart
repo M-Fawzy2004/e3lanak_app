@@ -39,7 +39,7 @@ class UploadDropzoneCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 250.h,
+        height: 300.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.primaryLight, width: 1.5),

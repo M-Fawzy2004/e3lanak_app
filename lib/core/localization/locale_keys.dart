@@ -16,6 +16,7 @@ abstract final class LocaleKeys {
   static const String delete = 'common.delete';
   static const String back = 'common.back';
   static const String next = 'common.next';
+  static const String previous = 'common.previous';
   static const String retry = 'common.retry';
   static const String loading = 'common.loading';
   static const String success = 'common.success';
@@ -77,6 +78,27 @@ abstract final class LocaleKeys {
   static const String adProductDescHint =
       'ad_generator.product_description_hint';
   static const String adProductPriceHint = 'ad_generator.product_price_hint';
+
+  static const String adStep2Title = 'ad_generator.step2_title';
+  static const String adStep2Subtitle = 'ad_generator.step2_subtitle';
+  static const String adProductNameLabel = 'ad_generator.product_name_label';
+  static const String adProductNameRequired =
+      'ad_generator.product_name_required';
+  static const String adOriginalPriceLabel =
+      'ad_generator.original_price_label';
+  static const String adOriginalPriceHint = 'ad_generator.original_price_hint';
+  static const String adOriginalPriceRequired =
+      'ad_generator.original_price_required';
+  static const String adDiscountPriceLabel =
+      'ad_generator.discount_price_label';
+  static const String adDiscountPriceHint = 'ad_generator.discount_price_hint';
+  static const String adDiscountPriceInvalid =
+      'ad_generator.discount_price_invalid';
+  static const String adSavingsBanner = 'ad_generator.savings_banner';
+  static const String adBrandFeaturesLabel =
+      'ad_generator.brand_features_label';
+  static const String adBrandFeaturesHint = 'ad_generator.brand_features_hint';
+  static const String adCurrencyEgp = 'ad_generator.currency_egp';
 
   static const String adTonePersuasive = 'ad_generator.tone_persuasive';
   static const String adToneFormal = 'ad_generator.tone_formal';

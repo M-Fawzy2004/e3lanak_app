@@ -60,7 +60,7 @@ class AdImageActionButtons extends StatelessWidget {
         borderRadius: BorderRadius.circular(14.r),
         onTap: onTap,
         child: Container(
-          height: 52.h,
+          height: 50.h,
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           decoration: BoxDecoration(
             color: isDisabled ? AppColors.slate50 : AppColors.white,

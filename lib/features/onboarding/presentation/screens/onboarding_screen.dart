@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
-
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -282,7 +280,9 @@ class _SwipeToStartButtonState extends State<_SwipeToStartButton>
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Icon(
-                            isRtl ? Iconsax.arrow_left : Iconsax.arrow_right,
+                            isRtl
+                                ? Icons.arrow_forward_ios_outlined
+                                : Icons.arrow_back_ios_new_outlined,
                             color: AppColors.primary,
                             size: knobSize * 0.3,
                           ),

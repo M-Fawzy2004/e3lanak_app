@@ -136,7 +136,7 @@ class AdStep1Cubit extends Cubit<AdStep1State> {
     }
 
     emit(state.copyWith(
-      notice: AdStep1Notice.nextStepUnavailable,
+      notice: AdStep1Notice.stepCompleted,
     ));
   }
 
