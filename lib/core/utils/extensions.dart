@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../constants/app_constants.dart';
+import '../localization/language_manager.dart';
 
 /// Ergonomic BuildContext extensions for Clean Architecture presentation code.
 extension ContextExtensions on BuildContext {
@@ -9,8 +8,8 @@ extension ContextExtensions on BuildContext {
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
 
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
-  bool get isArabic => locale.languageCode == AppConstants.arabicLocaleCode;
-  bool get isRtl => isArabic;
+  bool get isArabic => LanguageManager.isArabic(this);
+  bool get isRtl => LanguageManager.isRtl(this);
 
   double get screenHeight => MediaQuery.sizeOf(this).height;
   double get screenWidth => MediaQuery.sizeOf(this).width;

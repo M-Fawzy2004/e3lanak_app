@@ -62,7 +62,7 @@ class E3lanakApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           builder: (context, widget) {
             return Directionality(
-              textDirection: context.locale.languageCode == AppConstants.arabicLocaleCode
+              textDirection: LanguageManager.isRtl(context)
                   ? ui.TextDirection.rtl
                   : ui.TextDirection.ltr,
               child: widget ?? const SizedBox.shrink(),
