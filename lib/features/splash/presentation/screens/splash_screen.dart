@@ -1,13 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/localization/locale_keys.dart';
+
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/brand_loading_indicator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,16 +37,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _verifySession() async {
     try {
-      _isAuthenticated =
-          Supabase.instance.client.auth.currentSession != null;
+      _isAuthenticated = Supabase.instance.client.auth.currentSession != null;
     } catch (_) {
       _isAuthenticated = false;
     }
   }
 
   void _navigate() {
-    final destination =
-        _isAuthenticated ? AppRoutes.home : AppRoutes.onboarding;
+    final destination = _isAuthenticated
+        ? AppRoutes.home
+        : AppRoutes.onboarding;
     Navigator.of(context).pushReplacementNamed(destination);
   }
 
@@ -68,10 +67,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    'assets/images/splash_logo.png',
-                    width: 270.w,
-                    fit: BoxFit.contain,
-                  )
+                        'assets/images/splash_logo.png',
+                        width: 270.w,
+                        fit: BoxFit.contain,
+                      )
                       .animate()
                       .fadeIn(duration: 600.ms)
                       .scale(
@@ -79,35 +78,16 @@ class _SplashScreenState extends State<SplashScreen> {
                         end: const Offset(1, 1),
                         curve: Curves.easeOutCubic,
                       ),
-                  SizedBox(height: 28.h),
-                  Text(
-                    tr(LocaleKeys.splashSlogan),
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.tajawal(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.white.withValues(alpha: 0.9),
-                    ),
-                  )
-                      .animate()
-                      .fadeIn(delay: 350.ms, duration: 500.ms)
-                      .slideY(begin: 0.15, end: 0),
                 ],
               ),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 48.h),
-                child: SizedBox(
-                  width: 24.w,
-                  height: 24.w,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.5,
-                    color: AppColors.white.withValues(alpha: 0.7),
-                  ),
-                )
+                child: BrandLoadingIndicator(size: 56.w)
                     .animate()
                     .fadeIn(delay: 600.ms, duration: 400.ms),
               ),
+              SizedBox(height: 25.h),
             ],
           ),
         ),
