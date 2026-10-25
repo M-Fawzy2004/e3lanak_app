@@ -117,6 +117,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         color: AppColors.transparent,
         child: InkWell(
           onTap: () => _selectTab(index),
+          splashFactory: NoSplash.splashFactory,
+          splashColor: AppColors.transparent,
+          highlightColor: AppColors.transparent,
+          focusColor: AppColors.transparent,
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 2.w),
             child: Column(
@@ -124,8 +128,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AnimatedScale(
-                  scale: isSelected ? 1.08 : 1,
-                  duration: const Duration(milliseconds: 180),
+                  scale: isSelected ? 1.04 : 1,
+                  duration: const Duration(milliseconds: 220),
                   curve: Curves.easeOutCubic,
                   child: Icon(
                     destination.icon,
@@ -133,11 +137,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     color: foregroundColor,
                   ),
                 ),
-                Gap(4.h),
+                Gap(3.h),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOutCubic,
+                  width: isSelected ? 16.w : 0,
+                  height: 2.h,
+                  decoration: BoxDecoration(
+                    color: isSelected ? AppColors.primary : AppColors.transparent,
+                    borderRadius: BorderRadius.circular(99.r),
+                  ),
+                ),
+                Gap(3.h),
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 160),
                   curve: Curves.easeOut,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     color: foregroundColor,
                     fontSize: 11.sp,
                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
