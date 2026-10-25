@@ -22,6 +22,7 @@ abstract final class LocaleKeys {
   static const String error = 'common.error';
   static const String copiedToClipboard = 'common.copied_to_clipboard';
   static const String noInternet = 'common.no_internet';
+  static const String pageNotFound = 'common.page_not_found';
 
   // Navigation
   static const String navHome = 'navigation.home';
@@ -60,4 +61,5 @@ abstract final class LocaleKeys {
   // Splash
   static const String splashWelcome = 'splash.welcome';
   static const String splashLoadingReady = 'splash.loading_ready';
+  static const String splashSlogan = 'splash.slogan';
 }

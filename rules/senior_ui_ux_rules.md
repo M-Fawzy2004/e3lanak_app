@@ -1,23 +1,40 @@
-# SENIOR FLUTTER UI/UX & INTERFACE ENGINEERING RULES
+# Flutter UI, UX, Accessibility, and Performance
 
-## 1. Visual Hierarchy & Design System
-- **Clean Aesthetic:** Use modern cards, subtle shadows (`BoxShadow` with low opacity `0.04 - 0.08`), and consistent border radii (standardize: 12px for inputs, 16px for cards, 24px for bottom sheets).
-- **RTL & Arabic Typography:** 
-  - Ensure first-class Right-to-Left (RTL) alignment across all screens.
-  - Use high-legibility Arabic typography with proportional `lineHeight` (minimum 1.4) to prevent glyph clipping.
-- **Adaptive Layouts:** Never hardcode fixed pixel widths for responsive components. Use layout constraints and proportional sizing to handle all mobile screen dimensions cleanly.
+Build interfaces that are consistent with the product design system, work across supported locales and screen sizes, and expose clear interaction states.
 
-## 2. Component Structure & Performance
-- **Zero Monolithic Widgets:** Break down any widget exceeding 120 lines into small, focused, private widget classes (prefer standalone widgets over helper functions returning widgets to preserve widget tree repainting efficiency).
-- **Constant Constructors:** Enforce `const` constructors everywhere applicable to minimize rebuild passes.
-- **Inputs & Forms:**
-  - Wrap text fields with smooth validation.
-  - Automatically handle keyboard dismissals when tapping outside (`GestureDetector` with `HitTestBehavior.opaque`).
-  - Use `SingleChildScrollView` with proper `BouncingScrollPhysics` or `ClampingScrollPhysics` to avoid overflow errors (`RenderFlex overflowed`).
+## 1. Design system and visual fidelity
 
-## 3. Micro-Interactions, Feedback & States
-- **Loading States:** Never display raw, blocking spinners in the middle of a blank screen. Use elegant skeleton loading (shimmer) matching the exact dimensions of the target card.
-- **Tactile Feedback:** Trigger subtle haptic feedback (`HapticFeedback.lightImpact()`) upon successful copy actions, generation completion, and main CTA taps.
-- **Copy & Share Actions:**
-  - Provide immediate visual confirmation (e.g., a custom animated Floating SnackBar or Toast) when copying text.
-  - Implement native system share dialogs for the generated copy.
+- Inspect existing theme tokens, typography, reusable components, and supplied references before creating new visual styles.
+- Use shared colors, spacing, typography, radii, and component patterns where available. Add a token only when it represents a reusable design decision.
+- For screenshot/reference work, match hierarchy, alignment, sizing, color, and spacing against the provided reference while preserving responsive behavior.
+- Avoid decorative effects that reduce contrast, legibility, or performance. Do not add shadows, gradients, animation, or haptics without a design or interaction purpose.
+
+## 2. Responsive layout and localization
+
+- Design against constraints, not a single device size. Handle narrow screens, large text, keyboard appearance, safe areas, and orientation changes where supported.
+- Use `flutter_screenutil` consistently with the app's established design baseline; do not apply `.w`, `.h`, or `.sp` mechanically to every value.
+- Support Arabic RTL and English LTR using localization rules and directional layout APIs.
+- Avoid fixed heights for text-heavy content. Prevent overflow with appropriate scrolling, flexible constraints, and text scaling.
+
+## 3. Interaction states and accessibility
+
+- Every asynchronous interaction should communicate relevant loading, success, empty, and failure states without blocking unrelated navigation.
+- Use a progress indicator when work is actively pending; use skeletons only when they improve the perceived structure of content that is loading.
+- Make controls reachable and understandable: adequate hit targets, labels/semantics, keyboard/focus behavior where applicable, visible focus, and sufficient contrast.
+- Provide validation close to the affected input and preserve user-entered data after recoverable errors.
+- Use haptics and animation sparingly, respect platform behavior and reduced-motion preferences where available, and never make essential information animation-only.
+
+## 4. Widget structure and performance
+
+- Keep widgets cohesive and extract components when that improves readability, reuse, or independent testing; do not use a line-count threshold as the sole reason to split a widget.
+- Use `const` constructors and stable keys where they provide value. Avoid unnecessary rebuilds, repeated expensive work in `build`, and unbounded image/network work.
+- Use the correct lifecycle for controllers, focus nodes, subscriptions, and animations. Cancel or dispose owned resources.
+- Use semantic Material/Cupertino controls where possible instead of recreating platform behavior.
+
+## 5. Review checklist
+
+- Does the screen follow existing product patterns and support both locales?
+- Are content, controls, loading, empty, and error states understandable?
+- Does it remain usable with larger text, narrow constraints, and the keyboard visible?
+- Are semantics, contrast, focus, and touch targets adequate?
+- Are lifecycle and performance costs appropriate for the interaction?

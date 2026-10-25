@@ -64,6 +64,10 @@ abstract final class AppColors {
   static const Color success = Color(0xFF10B981);
   static const Color info = Color(0xFF0D5EF4);
 
+  // Splash Screen
+  static const Color splashGradientTop = Color(0xFF0D5EF4);
+  static const Color splashGradientBottom = Color(0xFF063399);
+
   // Pure & Alpha Overlays
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
@@ -82,6 +86,12 @@ abstract final class AppColors {
       Color(0xFF0946C2),
       Color(0xFF0D5EF4),
     ],
+  );
+
+  static const LinearGradient splashGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [splashGradientTop, splashGradientBottom],
   );
 
   /// Alias for primary Royal Blue gradient

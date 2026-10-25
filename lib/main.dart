@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'core/constants/app_constants.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/localization/language_manager.dart';
+import 'core/routes/app_router.dart';
+import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
-import 'features/auth/presentation/screens/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,7 +68,8 @@ class E3lanakApp extends StatelessWidget {
               child: widget ?? const SizedBox.shrink(),
             );
           },
-          home: const SplashPage(),
+          initialRoute: AppRoutes.splash,
+          onGenerateRoute: AppRouter.onGenerateRoute,
         );
       },
     );
