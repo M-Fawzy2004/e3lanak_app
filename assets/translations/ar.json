@@ -36,8 +36,11 @@
     "coming_soon": "نعمل على تجهيز هذا القسم، ترقّب المزيد قريبًا.",
     "create_actions_title": "ابدأ إعلانًا جديدًا",
     "create_ai_ad": "إنشاء إعلان بالذكاء الاصطناعي",
+    "create_ai_ad_subtitle": "توليد نصوص وتفاصيل إعلانية بالذكاء الاصطناعي",
     "publish_direct_ad": "نشر إعلان مباشر",
-    "creation_feature_coming_soon": "الميزة دي هتكون متاحة قريبًا."
+    "publish_direct_ad_subtitle": "نشر إعلانك يدويًا بالصور والتفاصيل الخاصة بك",
+    "creation_feature_coming_soon": "الميزة دي هتكون متاحة قريبًا.",
+    "close": "إغلاق"
   },
   "ad_generator": {
     "step1_title": "أضف صور المنتج أو العرض",
@@ -89,7 +92,20 @@
     "savings_banner": "سيتم عرض نسبة التوفير ({}%) في الإعلان",
     "brand_features_label": "مميزات إضافية للبراند (اختياري)",
     "brand_features_hint": "متاح معاينة قبل الاستلام، شحن مجاني، خامة قطن 100%، متوفر بجميع المقاسات.",
-    "currency_egp": "ج.م"
+    "currency_egp": "ج.م",
+    "step3_title": "تصنيف النشاط أو المنتج",
+    "step3_subtitle": "حدد مجال منتجك ليصيغ الذكاء الاصطناعي إعلاناً دقيقاً ومستهدفاً",
+    "section_categories": "تصنيف النشاط",
+    "cat_electronics": "إلكترونيات وموبايلات",
+    "cat_clothing": "ملابس وموضة",
+    "cat_restaurants": "مطاعم وكافيهات",
+    "cat_services": "ورش وخدمات",
+    "cat_furniture": "أثاث وديكورات",
+    "cat_beauty": "صحة وجمال",
+    "cat_custom_hint": "اكتب التصنيف يدوياً...",
+    "cat_other": "أخرى",
+    "select_category_required": "يرجى اختيار أو كتابة تصنيف النشاط للمتابعة",
+    "generate_ai_ad": "توليد الإعلان بالذكاء الاصطناعي"
   },
   "splash": {
     "welcome": "أهلاً بك في إعلانك",

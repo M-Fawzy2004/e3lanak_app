@@ -36,8 +36,11 @@
     "coming_soon": "We’re getting this section ready. More coming soon.",
     "create_actions_title": "Start a new ad",
     "create_ai_ad": "Create an AI ad",
+    "create_ai_ad_subtitle": "Generate complete ad copy and details using AI",
     "publish_direct_ad": "Publish a direct ad",
-    "creation_feature_coming_soon": "This feature will be available soon."
+    "publish_direct_ad_subtitle": "Manually publish your ad with your own details",
+    "creation_feature_coming_soon": "This feature will be available soon.",
+    "close": "Close"
   },
   "ad_generator": {
     "step1_title": "Add Product or Offer Photos",
@@ -89,7 +92,20 @@
     "savings_banner": "Savings of ({}%) will be highlighted in the ad",
     "brand_features_label": "Additional Brand Features (Optional)",
     "brand_features_hint": "Inspection before delivery, free shipping, 100% cotton, all sizes available.",
-    "currency_egp": "EGP"
+    "currency_egp": "EGP",
+    "step3_title": "Product or Business Category",
+    "step3_subtitle": "Select your product field so AI crafts a targeted and effective ad",
+    "section_categories": "Business Category",
+    "cat_electronics": "Electronics & Mobiles",
+    "cat_clothing": "Fashion & Clothing",
+    "cat_restaurants": "Restaurants & Cafes",
+    "cat_services": "Workshops & Services",
+    "cat_furniture": "Furniture & Decor",
+    "cat_beauty": "Health & Beauty",
+    "cat_custom_hint": "Enter category manually...",
+    "cat_other": "Other",
+    "select_category_required": "Please select or enter a category to proceed",
+    "generate_ai_ad": "Generate Ad with AI"
   },
   "splash": {
     "welcome": "Welcome to E3lanak",

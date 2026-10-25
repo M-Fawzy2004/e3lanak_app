@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/locale_keys.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_top_snack_bar.dart';
 import '../controllers/ad_step2_cubit.dart';
@@ -80,10 +81,7 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
         );
       }
     } else if (state.notice == AdStep2Notice.stepCompleted) {
-      AppSnackBar.showInfo(
-        context,
-        message: tr(LocaleKeys.adNextStepUnavailable),
-      );
+      Navigator.of(context).pushNamed(AppRoutes.adGeneratorStep3);
     }
 
     if (state.notice != AdStep2Notice.none) {
@@ -104,6 +102,7 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
         final cubit = context.read<AdStep2Cubit>();
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.background,
           body: SafeArea(
             child: Column(
@@ -117,28 +116,38 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Gap(20.h),
-                        // Screen Title
-                        Text(
-                          tr(LocaleKeys.adStep2Title),
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(
-                                color: AppColors.darkNeutral,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w800,
+                        // Centered Title & Subtitle
+                        Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                tr(LocaleKeys.adStep2Title),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(
+                                      color: AppColors.darkNeutral,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                               ),
-                        ),
-                        Gap(8.h),
-
-                        // Subtitle
-                        Text(
-                          tr(LocaleKeys.adStep2Subtitle),
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: AppColors.textSecondary,
-                                fontSize: 13.5.sp,
-                                fontWeight: FontWeight.w500,
-                                height: 1.45,
+                              Gap(8.h),
+                              Text(
+                                tr(LocaleKeys.adStep2Subtitle),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 13.5.sp,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.45,
+                                    ),
                               ),
+                            ],
+                          ),
                         ),
                         Gap(22.h),
 
@@ -150,8 +159,7 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
                           hintText: tr(LocaleKeys.adProductNameHint),
                           maxLength: AdStep2State.maxProductNameLength,
                           currentLength: state.productName.length,
-                          hasError:
-                              state.showValidationErrors &&
+                          hasError: state.showValidationErrors &&
                               !state.isProductNameValid,
                           onChanged: cubit.setProductName,
                         ),
@@ -172,8 +180,7 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
                               RegExp(r'^\d*\.?\d*'),
                             ),
                           ],
-                          hasError:
-                              state.showValidationErrors &&
+                          hasError: state.showValidationErrors &&
                               !state.isOriginalPriceValid,
                           onChanged: cubit.setOriginalPrice,
                         ),
@@ -194,8 +201,7 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
                               RegExp(r'^\d*\.?\d*'),
                             ),
                           ],
-                          hasError:
-                              state.showValidationErrors &&
+                          hasError: state.showValidationErrors &&
                               !state.isDiscountPriceValid,
                           onChanged: cubit.setDiscountPrice,
                         ),
@@ -220,15 +226,16 @@ class _AdStep2DetailsViewState extends State<_AdStep2DetailsView> {
                           onChanged: cubit.setBrandFeatures,
                         ),
                         Gap(24.h),
+
+                        // In-page Bottom Action Buttons
+                        AdStep2BottomActions(
+                          onNext: cubit.validateAndProceed,
+                          onPrevious: () => Navigator.of(context).maybePop(),
+                        ),
+                        Gap(24.h),
                       ],
                     ),
                   ),
-                ),
-
-                // Bottom Action Buttons
-                AdStep2BottomActions(
-                  onNext: cubit.validateAndProceed,
-                  onPrevious: () => Navigator.of(context).maybePop(),
                 ),
               ],
             ),

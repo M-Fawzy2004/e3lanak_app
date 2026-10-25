@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/locale_keys.dart';
@@ -20,14 +21,6 @@ import '../widgets/step_progress_indicator.dart';
 import '../widgets/upload_dropzone_card.dart';
 
 /// Screen: Step 1 of the Ad Creation Flow (Upload Product Photos).
-///
-/// Features:
-/// - Clean Architecture compliant: delegates state & logic to [AdStep1Cubit]
-/// - Dynamic image picking from Gallery and Camera via domain use cases
-/// - Primary hero card previewing 1st image or empty dashed dropzone
-/// - Preview thumbnails with quick remove actions
-/// - Directional RTL/LTR safe navigation and typography
-/// - Responsive sizing with flutter_screenutil and AppColors tokens
 class AdStep1UploadScreen extends StatelessWidget {
   const AdStep1UploadScreen({super.key});
 
@@ -95,11 +88,12 @@ class _AdStep1UploadView extends StatelessWidget {
         final cubit = context.read<AdStep1Cubit>();
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.background,
           body: SafeArea(
             child: Column(
               children: [
-                // Top App Bar with back navigation and centered progress stepper
+                // Top App Bar
                 _buildTopAppBar(context, isRtl),
 
                 // Scrollable Content
@@ -108,13 +102,16 @@ class _AdStep1UploadView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     physics: const BouncingScrollPhysics(),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Gap(20.h),
-                        // Title
+                        // Centered Title & Subtitle
                         Text(
                           tr(LocaleKeys.adStep1Title),
-                          style: Theme.of(context).textTheme.headlineSmall
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
                               ?.copyWith(
                                 color: AppColors.darkNeutral,
                                 fontSize: 20.sp,
@@ -122,16 +119,17 @@ class _AdStep1UploadView extends StatelessWidget {
                               ),
                         ),
                         Gap(8.h),
-
-                        // Subtitle
                         Text(
                           tr(LocaleKeys.adStep1Subtitle),
-                          style: Theme.of(context).textTheme.bodyMedium
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
                               ?.copyWith(
                                 color: AppColors.textSecondary,
                                 fontSize: 13.5.sp,
                                 fontWeight: FontWeight.w500,
-                                height: 1,
+                                height: 1.3,
                               ),
                         ),
                         Gap(20.h),
@@ -161,13 +159,14 @@ class _AdStep1UploadView extends StatelessWidget {
                           onAddTap: cubit.pickFromGallery,
                         ),
                         Gap(24.h),
+
+                        // In-page Bottom Next CTA Button
+                        _buildBottomNextButton(context, state, isRtl),
+                        Gap(24.h),
                       ],
                     ),
                   ),
                 ),
-
-                // Bottom Next CTA Button
-                _buildBottomNextButton(context, state, isRtl),
               ],
             ),
           ),
@@ -216,41 +215,37 @@ class _AdStep1UploadView extends StatelessWidget {
   ) {
     final cubit = context.read<AdStep1Cubit>();
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-      decoration: const BoxDecoration(color: AppColors.white),
-      child: Material(
-        color: AppColors.primary,
+    return Material(
+      color: AppColors.primary,
+      borderRadius: BorderRadius.circular(14.r),
+      elevation: 2,
+      shadowColor: AppColors.primary.withValues(alpha: 0.3),
+      child: InkWell(
         borderRadius: BorderRadius.circular(14.r),
-        elevation: 2,
-        shadowColor: AppColors.primary.withValues(alpha: 0.3),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(14.r),
-          onTap: state.isLoading ? null : cubit.validateAndProceed,
-          child: Container(
-            height: 52.h,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: state.isLoading
-                ? SizedBox(
-                    width: 22.w,
-                    height: 22.w,
-                    child: const CircularProgressIndicator(
-                      strokeWidth: 2.2,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.white,
-                      ),
-                    ),
-                  )
-                : Text(
-                    tr(LocaleKeys.next),
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: AppColors.white,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w700,
+        onTap: state.isLoading ? null : cubit.validateAndProceed,
+        child: Container(
+          height: 52.h,
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: state.isLoading
+              ? SizedBox(
+                  width: 22.w,
+                  height: 22.w,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 2.2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.white,
                     ),
                   ),
-          ),
+                )
+              : Text(
+                  tr(LocaleKeys.next),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.white,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
         ),
       ),
     );

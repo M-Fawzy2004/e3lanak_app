@@ -10,6 +10,7 @@ import '../../features/ad_generator/domain/usecases/capture_ad_photo_usecase.dar
 import '../../features/ad_generator/domain/usecases/pick_ad_images_usecase.dart';
 import '../../features/ad_generator/presentation/controllers/ad_step1_cubit.dart';
 import '../../features/ad_generator/presentation/controllers/ad_step2_cubit.dart';
+import '../../features/ad_generator/presentation/controllers/ad_step3_cubit.dart';
 
 /// Global Service Locator instance
 final sl = GetIt.instance;
@@ -66,6 +67,7 @@ void _initAdGeneratorFeature() {
     ),
   );
   sl.registerFactory(() => AdStep2Cubit());
+  sl.registerFactory(() => AdStep3Cubit());
 }
 
 void _initFeedFeature() {

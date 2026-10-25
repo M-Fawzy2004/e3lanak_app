@@ -38,9 +38,13 @@ abstract final class LocaleKeys {
   static const String navigationComingSoon = 'navigation.coming_soon';
   static const String createActionsTitle = 'navigation.create_actions_title';
   static const String createAiAd = 'navigation.create_ai_ad';
+  static const String createAiAdSubtitle = 'navigation.create_ai_ad_subtitle';
   static const String publishDirectAd = 'navigation.publish_direct_ad';
+  static const String publishDirectAdSubtitle =
+      'navigation.publish_direct_ad_subtitle';
   static const String creationFeatureComingSoon =
       'navigation.creation_feature_coming_soon';
+  static const String close = 'navigation.close';
 
   // Ad Generator Steps & Actions
   static const String adStep1Title = 'ad_generator.step1_title';
@@ -99,6 +103,21 @@ abstract final class LocaleKeys {
       'ad_generator.brand_features_label';
   static const String adBrandFeaturesHint = 'ad_generator.brand_features_hint';
   static const String adCurrencyEgp = 'ad_generator.currency_egp';
+
+  static const String adStep3Title = 'ad_generator.step3_title';
+  static const String adStep3Subtitle = 'ad_generator.step3_subtitle';
+  static const String adSectionCategories = 'ad_generator.section_categories';
+  static const String adCatElectronics = 'ad_generator.cat_electronics';
+  static const String adCatClothing = 'ad_generator.cat_clothing';
+  static const String adCatRestaurants = 'ad_generator.cat_restaurants';
+  static const String adCatServices = 'ad_generator.cat_services';
+  static const String adCatFurniture = 'ad_generator.cat_furniture';
+  static const String adCatBeauty = 'ad_generator.cat_beauty';
+  static const String adCatCustomHint = 'ad_generator.cat_custom_hint';
+  static const String adCatOther = 'ad_generator.cat_other';
+  static const String adSelectCategoryRequired =
+      'ad_generator.select_category_required';
+  static const String adGenerateAiAd = 'ad_generator.generate_ai_ad';
 
   static const String adTonePersuasive = 'ad_generator.tone_persuasive';
   static const String adToneFormal = 'ad_generator.tone_formal';
