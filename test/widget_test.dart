@@ -15,9 +15,17 @@ void main() {
       expect(AppConstants.englishLocaleCode, 'en');
     });
 
-    test('AppColors tokens define emerald primary and dark background', () {
-      expect(AppColors.primary, const Color(0xFF10B981));
-      expect(AppColors.primaryDark, const Color(0xFF059669));
+    test('AppColors tokens define Royal Blue, Accent Yellow, and Deep Slate Black', () {
+      expect(AppColors.primary, const Color(0xFF0D5EF4));
+      expect(AppColors.primaryDark, const Color(0xFF0946C2));
+      expect(AppColors.secondary, const Color(0xFFFFB800));
+      expect(AppColors.accent, const Color(0xFFFFB800));
+      expect(AppColors.darkNeutral, const Color(0xFF0F172A));
+      expect(AppColors.textPrimary, const Color(0xFF0F172A));
+      expect(AppColors.textSecondary, const Color(0xFF64748B));
+      expect(AppColors.background, const Color(0xFFF8FAFC));
+      expect(AppColors.border, const Color(0xFFE2E8F0));
+      expect(AppColors.surface, Colors.white);
       expect(AppColors.darkBackground, const Color(0xFF0F172A));
       expect(AppColors.darkSurface, const Color(0xFF1E293B));
     });

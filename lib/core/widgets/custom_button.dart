@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../theme/app_colors.dart';
 
-/// Highly customizable, responsive CTA button adhering to the emerald design system.
+/// Highly customizable, responsive CTA button supporting Royal Blue primary
+/// and Accent Yellow secondary variants for high-conversion actions.
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
   final bool isOutlined;
+  final bool isSecondary;
   final IconData? icon;
   final double? width;
   final double? height;
@@ -18,6 +20,7 @@ class CustomButton extends StatelessWidget {
     this.onPressed,
     this.isLoading = false,
     this.isOutlined = false,
+    this.isSecondary = false,
     this.icon,
     this.width,
     this.height,
@@ -45,18 +48,22 @@ class CustomButton extends StatelessWidget {
       );
     }
 
+    final gradient = isSecondary ? AppColors.accentGradient : AppColors.primaryGradient;
+    final textColor = isSecondary ? AppColors.darkNeutral : AppColors.white;
+    final shadowColor = isSecondary ? AppColors.secondary : AppColors.primary;
+
     return SizedBox(
       width: effectiveWidth,
       height: effectiveHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: onPressed == null || isLoading ? null : AppColors.emeraldGradient,
+          gradient: onPressed == null || isLoading ? null : gradient,
           borderRadius: BorderRadius.circular(12.r),
           color: (onPressed == null || isLoading) ? AppColors.slate300 : null,
           boxShadow: (onPressed != null && !isLoading)
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.25),
+                    color: shadowColor.withValues(alpha: 0.28),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -72,7 +79,7 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
             ),
           ),
-          child: _buildChild(context, AppColors.white),
+          child: _buildChild(context, textColor),
         ),
       ),
     );

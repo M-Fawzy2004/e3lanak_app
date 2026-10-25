@@ -1,39 +1,32 @@
-# LOCALIZATION & MULTI-LANGUAGE RULES (E3LANAK)
+# Localization and Internationalization
 
-## 1. Core Architecture & Standards
-- Multi-language support is strictly managed using `easy_localization`.
-- **Default & Fallback Locale:** Arabic (`Locale('ar')`) is the primary language and fallback locale for the application.
-- **Supported Locales:** Arabic (`ar`) and English (`en`).
-- **Translation Path:** All localization files must reside strictly in `assets/translations/`.
-  - `assets/translations/ar.json`
-  - `assets/translations/en.json`
-- Both JSON files must maintain identical key structures at all times. Nested namespaces (e.g. `common`, `auth`, `ad_generator`, `navigation`, `errors`) must be strictly synchronized.
+The app uses `easy_localization`, Arabic (`ar`) as the default/fallback locale, and English (`en`) as the other supported locale.
 
-## 2. Zero Hardcoded Strings Policy
-- **No hardcoded text strings in UI widgets:** Never write raw strings like `Text('Submit')` or `Text('إرسال')` inside the presentation layer or UI components.
-- All strings must be resolved using:
-  - `tr(LocaleKeys.someKey)` or `LocaleKeys.someKey.tr()`
-  - Or formatted with arguments: `LocaleKeys.welcomeUser.tr(args: [userName])` or `namedArgs: {'name': userName}`.
-- Any new label, tooltip, error message, button text, dialog title, or placeholder must be added to both `ar.json` and `en.json` before widget implementation.
-- Type-safe keys via `LocaleKeys` (generated or structured constants class) are required for all UI string lookups.
+## 1. Source of truth
 
-## 3. Bidirectional (RTL / LTR) Layout Standards
-- Arabic is an RTL (Right-to-Left) language, while English is LTR (Left-to-Right).
-- **Directional UI APIs:**
-  - Avoid hardcoded `EdgeInsets.only(left: ..., right: ...)`. Use `EdgeInsetsDirectional.only(start: ..., end: ...)` or `EdgeInsetsDirectional.fromSTEB(...)`.
-  - Avoid `Alignment.topLeft` or `Alignment.topRight` when positioning directional content; use `AlignmentDirectional.topStart` or `AlignmentDirectional.topEnd`.
-  - Use directional icons where applicable (e.g., back arrows, chevrons) so they automatically flip based on text direction or check `context.locale.languageCode == 'ar'`.
-- **MaterialApp Configuration:**
-  - Wrap top-level app or pass delegates to ensure `Directionality` dynamically responds to `context.locale`.
-  - Locale switches must trigger an immediate reactive widget rebuild across the entire tree without requiring an application restart.
+- Store translations in `assets/translations/ar.json` and `assets/translations/en.json`.
+- Use `LocaleKeys` constants for application translation lookups. Avoid inline key strings and raw user-facing copy in widgets.
+- Add each new user-visible string to both locale files in the same change. Keep key paths and interpolation parameters equivalent across locales.
+- Use clear nested namespaces such as `common`, `navigation`, `auth`, and feature-specific namespaces. Do not reuse a key merely because the English text happens to match; meanings may diverge across locales.
+- Keep server/API codes separate from user-facing translated messages. Map known errors to localized copy at the presentation boundary.
 
-## 4. Typography & Font Integration
-- Arabic text must render using Google Fonts **Cairo** (or **Tajawal** for specialized headings) with appropriate line heights to prevent character clipping.
-- English text renders using Google Fonts **Inter** or standard Latin typography fallback.
-- `flutter_screenutil` responsive font scaling (`.sp`) must be used for all text styles defined in `AppTypography` / `AppTheme`.
+## 2. Translation quality and interpolation
 
-## 5. Verification & Code Review Checklist
-1. Are all strings extracted into `ar.json` and `en.json`?
-2. Does switching language from Arabic to English instantly flip text and layout direction without app restart?
-3. Are all paddings and alignments using directional variants (`start`/`end`) instead of absolute (`left`/`right`)?
-4. Is `Locale('ar')` verified as the default fallback locale?
+- Write natural, concise Arabic and English. Do not machine-translate product terms blindly; preserve approved brand names and terminology consistently.
+- Use named interpolation arguments for dynamic values where practical. Never concatenate untrusted data into a translated sentence when a parameterized translation is clearer.
+- Translate labels, validation messages, empty/error/loading states, accessibility labels, tooltips, dialogs, notifications, and form hints. Do not localize internal identifiers, route names, logs, or developer diagnostics.
+- Avoid assembling a sentence from fragments; grammar and word order differ by locale.
+
+## 3. RTL, layout, and typography
+
+- Let the active locale drive `Directionality`. Do not hardcode global text direction inside individual features.
+- Prefer directional APIs such as `EdgeInsetsDirectional`, `AlignmentDirectional`, and direction-aware icons for content whose meaning depends on reading direction.
+- Use physical left/right positioning only for genuinely physical placement, such as an image composition that must remain fixed.
+- Use the existing typography/theme configuration. Ensure Arabic glyphs, diacritics, line height, truncation, and mixed Arabic/Latin content render correctly.
+- Do not assume translated text has the same length as its source. Verify wrapping, overflow, and layout at supported screen sizes.
+
+## 4. Locale behavior and verification
+
+- Preserve the configured Arabic startup and fallback behavior unless the user requests a product change.
+- Locale changes must update the active app tree through the localization framework without requiring a restart.
+- When localization verification is requested, check JSON validity, key parity, interpolation parity, RTL/LTR layout behavior, and representative long/short strings.

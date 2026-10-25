@@ -3,12 +3,39 @@ import 'package:flutter/material.dart';
 /// Single source of truth for all application color tokens.
 /// Strictly adheres to zero raw Color literals outside this class.
 abstract final class AppColors {
-  // Emerald Palette
-  static const Color primary = Color(0xFF10B981);
-  static const Color primaryDark = Color(0xFF059669);
-  static const Color primaryLight = Color(0xFF34D399);
-  static const Color primarySurface = Color(0xFFD1FAE5);
-  static const Color primaryContainer = Color(0xFFE6F4EA);
+  // Brand Core Palette - Royal Blue & Vibrant Commercial Gold
+  /// Primary: Vibrant Royal Blue
+  static const Color primary = Color(0xFF0D5EF4);
+
+  /// Primary Dark / Gradient Start
+  static const Color primaryDark = Color(0xFF0946C2);
+
+  /// Primary Light / Tint
+  static const Color primaryLight = Color(0xFF4384F7);
+
+  /// Primary Surface / Muted Container
+  static const Color primarySurface = Color(0xFFEBF2FE);
+  static const Color primaryContainer = Color(0xFFE0ECFF);
+
+  // Secondary & Accent - Energetic Commercial Yellow / Gold
+  /// Secondary / Accent: High-conversion actions
+  static const Color secondary = Color(0xFFFFB800);
+  static const Color accent = Color(0xFFFFB800);
+  static const Color accentLight = Color(0xFFFFC933);
+  static const Color accentDark = Color(0xFFE0A200);
+  static const Color accentSurface = Color(0xFFFFF8E6);
+
+  // High-Emphasis Dark Neutral & Text Tokens
+  /// Dark Neutral / Deep Slate Black for high-emphasis text and dark elements
+  static const Color darkNeutral = Color(0xFF0F172A);
+  static const Color textPrimary = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF64748B);
+
+  // Background & Surface
+  static const Color background = Color(0xFFF8FAFC);
+  static const Color surface = Colors.white;
+  static const Color border = Color(0xFFE2E8F0);
+  static const Color divider = Color(0xFFE2E8F0);
 
   // Slate Neutral Scale
   static const Color slate50 = Color(0xFFF8FAFC);
@@ -35,7 +62,11 @@ abstract final class AppColors {
   static const Color warning = Color(0xFFF59E0B);
   static const Color warningSurface = Color(0xFFFEF3C7);
   static const Color success = Color(0xFF10B981);
-  static const Color info = Color(0xFF3B82F6);
+  static const Color info = Color(0xFF0D5EF4);
+
+  // Splash Screen
+  static const Color splashGradientTop = Color(0xFF0D5EF4);
+  static const Color splashGradientBottom = Color(0xFF063399);
 
   // Pure & Alpha Overlays
   static const Color white = Color(0xFFFFFFFF);
@@ -47,15 +78,36 @@ abstract final class AppColors {
   static const Color darkShimmerHighlight = Color(0xFF334155);
 
   // Brand Gradients
-  static const LinearGradient emeraldGradient = LinearGradient(
+  /// Primary Royal Blue Gradient (Start: #0946C2, End: #0D5EF4)
+  static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF10B981),
-      Color(0xFF059669),
+      Color(0xFF0946C2),
+      Color(0xFF0D5EF4),
     ],
   );
 
+  static const LinearGradient splashGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [splashGradientTop, splashGradientBottom],
+  );
+
+  /// Alias for primary Royal Blue gradient
+  static const LinearGradient royalBlueGradient = primaryGradient;
+
+  /// High-Conversion Commercial Yellow / Gold Gradient
+  static const LinearGradient accentGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFFFFB800),
+      Color(0xFFFFA500),
+    ],
+  );
+
+  /// Dark Mode Card Gradient
   static const LinearGradient darkCardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

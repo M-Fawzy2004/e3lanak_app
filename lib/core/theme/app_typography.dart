@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Centralized Typography configuration supporting Cairo for Arabic and Inter for English.
+/// Centralized Typography configuration supporting Tajawal for Arabic and Plus Jakarta Sans for English.
 abstract final class AppTypography {
-  static const String arabicFontFamily = 'Cairo';
-  static const String englishFontFamily = 'Inter';
+  static const String arabicFontFamily = 'Tajawal';
+  static const String englishFontFamily = 'Plus Jakarta Sans';
 
-  /// Generates TextTheme using Cairo (with Inter fallback)
+  /// Generates TextTheme using Tajawal for elegant, modern Arabic typography.
   static TextTheme arabicTextTheme(Color textColor) {
-    return GoogleFonts.cairoTextTheme(
+    return GoogleFonts.tajawalTextTheme(
       TextTheme(
         displayLarge: TextStyle(
           fontSize: 32.sp,
@@ -88,9 +88,9 @@ abstract final class AppTypography {
     );
   }
 
-  /// Generates TextTheme using Inter
+  /// Generates TextTheme using Plus Jakarta Sans for geometric, clean, professional English typography.
   static TextTheme englishTextTheme(Color textColor) {
-    return GoogleFonts.interTextTheme(
+    return GoogleFonts.plusJakartaSansTextTheme(
       TextTheme(
         displayLarge: TextStyle(
           fontSize: 32.sp,
