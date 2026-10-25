@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/ad_generator/presentation/screens/ad_step1_upload_screen.dart';
+import '../../features/ad_generator/presentation/screens/ad_step2_details_screen.dart';
+import '../../features/ad_generator/presentation/screens/ad_step3_category_screen.dart';
 import '../../features/navigation/presentation/screens/main_navigation_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
@@ -15,6 +18,9 @@ abstract final class AppRouter {
       AppRoutes.onboarding => const OnboardingScreen(),
       AppRoutes.main => const MainNavigationScreen(),
       AppRoutes.home => const MainNavigationScreen(),
+      AppRoutes.adGeneratorStep1 => const AdStep1UploadScreen(),
+      AppRoutes.adGeneratorStep2 => const AdStep2DetailsScreen(),
+      AppRoutes.adGeneratorStep3 => const AdStep3CategoryScreen(),
       _ => const _RouteNotFoundScreen(),
     };
 

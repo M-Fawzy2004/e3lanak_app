@@ -9,8 +9,10 @@ import 'package:gap/gap.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/locale_keys.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_top_snack_bar.dart';
+import '../widgets/create_action_floating_sheet.dart';
 import 'navigation_tab_placeholders.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -69,21 +71,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
   Future<void> _openCreateActions() async {
     unawaited(HapticFeedback.mediumImpact());
 
-    final selectedAction = await showModalBottomSheet<_CreateAction>(
+    final selectedAction = await showModalBottomSheet<CreateActionType>(
       context: context,
       useSafeArea: true,
+      isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (sheetContext) => _CreateActionSheet(
+      barrierColor: AppColors.black.withValues(alpha: 0.55),
+      elevation: 0,
+      builder: (sheetContext) => CreateActionFloatingSheet(
         onSelected: (action) => Navigator.of(sheetContext).pop(action),
       ),
     );
 
     if (!mounted || selectedAction == null) return;
 
-    AppSnackBar.showInfo(
-      context,
-      message: tr(LocaleKeys.creationFeatureComingSoon),
-    );
+    if (selectedAction == CreateActionType.aiAd) {
+      unawaited(Navigator.of(context).pushNamed(AppRoutes.adGeneratorStep1));
+    } else {
+      AppSnackBar.showInfo(
+        context,
+        message: tr(LocaleKeys.creationFeatureComingSoon),
+      );
+    }
   }
 
   Widget _buildBottomAppBar(BuildContext context) {
@@ -276,111 +285,6 @@ class _NavigationDestination {
   final String labelKey;
 }
 
-enum _CreateAction { aiAd, directPost }
-
-class _CreateActionSheet extends StatelessWidget {
-  const _CreateActionSheet({required this.onSelected});
-
-  final ValueChanged<_CreateAction> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20.w, 12.h, 20.w, 20.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Container(
-                  width: 36.w,
-                  height: 4.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.slate300,
-                    borderRadius: BorderRadius.circular(99.r),
-                  ),
-                ),
-              ),
-              Gap(18.h),
-              Text(
-                tr(LocaleKeys.createActionsTitle),
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.darkNeutral,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Gap(14.h),
-              _CreateActionTile(
-                icon: Iconsax.magic_star,
-                titleKey: LocaleKeys.createAiAd,
-                onTap: () => onSelected(_CreateAction.aiAd),
-              ),
-              Gap(10.h),
-              _CreateActionTile(
-                icon: Iconsax.image,
-                titleKey: LocaleKeys.publishDirectAd,
-                onTap: () => onSelected(_CreateAction.directPost),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CreateActionTile extends StatelessWidget {
-  const _CreateActionTile({
-    required this.icon,
-    required this.titleKey,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String titleKey;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.primarySurface,
-      borderRadius: BorderRadius.circular(16.r),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16.r),
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsetsDirectional.symmetric(
-            horizontal: 16.w,
-            vertical: 14.h,
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 24.sp, color: AppColors.primary),
-              Gap(12.w),
-              Expanded(
-                child: Text(
-                  tr(titleKey),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: AppColors.darkNeutral,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 /// Custom painter that renders:
 /// 1. A clean static top border tracing the top edge and the circular notch

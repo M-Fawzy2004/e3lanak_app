@@ -1,41 +1,90 @@
 # Flutter UI, UX, Accessibility, and Performance
 
-Build interfaces that are consistent with the product design system, work across supported locales and screen sizes, and expose clear interaction states.
+> **Before applying any UI rule here, confirm that `app_rules.md` (project root) has been fully read.
+> Section 3 of `app_rules.md` (Design System) takes precedence over everything in this file.**
 
-## 1. Design system and visual fidelity
+---
 
-- Inspect existing theme tokens, typography, reusable components, and supplied references before creating new visual styles.
-- Use shared colors, spacing, typography, radii, and component patterns where available. Add a token only when it represents a reusable design decision.
-- For screenshot/reference work, match hierarchy, alignment, sizing, color, and spacing against the provided reference while preserving responsive behavior.
-- Avoid decorative effects that reduce contrast, legibility, or performance. Do not add shadows, gradients, animation, or haptics without a design or interaction purpose.
-- Use `iconsax_flutter` (`Iconsax`) as the standard icon library for application UI. Do not use Material `Icons`, emoji, or Unicode symbols for product interface icons. Choose the closest semantic Iconsax glyph and keep icon weight/style consistent within each component; retain platform-native icons only when a platform control requires them.
+## 1. Design System Fidelity — Non-Negotiable
 
-## 2. Responsive layout and localization
+### Colors
+- **Zero raw hex literals** in any widget. Use `AppColors.*` tokens exclusively.
+  - See the full token list in `app_rules.md § 3.1`.
+- **Zero `Colors.*`** (Material color constants) in any widget file.
+- If a color is not in `AppColors`, ask the user to add it — do not inline it.
 
-- Design against constraints, not a single device size. Handle narrow screens, large text, keyboard appearance, safe areas, and orientation changes where supported.
-- Use `flutter_screenutil` consistently with the app's established design baseline; do not apply `.w`, `.h`, or `.sp` mechanically to every value.
-- Support Arabic RTL and English LTR using localization rules and directional layout APIs.
-- Avoid fixed heights for text-heavy content. Prevent overflow with appropriate scrolling, flexible constraints, and text scaling.
+### Typography
+- **Zero standalone `TextStyle(...)`** calls in widgets. Use `Theme.of(context).textTheme.<slot>?.copyWith(...)`.
+- **Zero `GoogleFonts.*`** calls in feature or widget files. Font families are handled in `AppTypography` and `AppTheme`.
+- See the textTheme slot reference table in `app_rules.md § 3.2`.
 
-## 3. Interaction states and accessibility
+### Icons
+- **`Iconsax` (iconsax_flutter) is the sole icon library** for product UI.
+- `Icons.*` (Material) is forbidden in feature/product code.
+- Use `Iconsax.arrow_right` / `Iconsax.arrow_left` and toggle based on `LanguageManager.isRtl(context)`.
 
-- Every asynchronous interaction should communicate relevant loading, success, empty, and failure states without blocking unrelated navigation.
-- Use a progress indicator when work is actively pending; use skeletons only when they improve the perceived structure of content that is loading.
-- Make controls reachable and understandable: adequate hit targets, labels/semantics, keyboard/focus behavior where applicable, visible focus, and sufficient contrast.
-- Provide validation close to the affected input and preserve user-entered data after recoverable errors.
-- Use haptics and animation sparingly, respect platform behavior and reduced-motion preferences where available, and never make essential information animation-only.
+### Spacing
+- All sizes, paddings, radii, and font sizes must use `flutter_screenutil` (`.w`, `.h`, `.r`, `.sp`).
+- Established radius tokens are in `app_rules.md § 3.4`. Do not invent new radius values.
+- Use `Gap(n.h)` / `Gap(n.w)` for spacing between children.
 
-## 4. Widget structure and performance
+---
 
-- Keep widgets cohesive and extract components when that improves readability, reuse, or independent testing; do not use a line-count threshold as the sole reason to split a widget.
-- Use `const` constructors and stable keys where they provide value. Avoid unnecessary rebuilds, repeated expensive work in `build`, and unbounded image/network work.
-- Use the correct lifecycle for controllers, focus nodes, subscriptions, and animations. Cancel or dispose owned resources.
-- Use semantic Material/Cupertino controls where possible instead of recreating platform behavior.
+## 2. Responsive Layout and Localization
 
-## 5. Review checklist
+- Design against constraints, not a single device size. Handle narrow screens, large text, keyboard appearance, safe areas, and orientation changes.
+- Use `flutter_screenutil` consistently with the app's established design baseline (`375w × 812h`).
+- Support Arabic RTL and English LTR using `easy_localization` and directional layout APIs.
+  - `EdgeInsetsDirectional` not `EdgeInsets` for directional padding.
+  - `AlignmentDirectional` not `Alignment` for directional alignment.
+  - `TextAlign.start` / `TextAlign.end` not `.left` / `.right`.
+- Avoid fixed heights for text-heavy content. Use flexible constraints, scroll, and text scaling.
 
-- Does the screen follow existing product patterns and support both locales?
-- Are content, controls, loading, empty, and error states understandable?
-- Does it remain usable with larger text, narrow constraints, and the keyboard visible?
-- Are semantics, contrast, focus, and touch targets adequate?
-- Are lifecycle and performance costs appropriate for the interaction?
+---
+
+## 3. Interaction States and Accessibility
+
+- Every asynchronous interaction must show `loading`, `success`, `empty`, and `failure` states.
+- Use a `BrandLoadingIndicator` (project widget) for loading states where it exists.
+- Use skeletons only when they improve perceived structure of loading content.
+- Provide `Semantics` wrappers for custom interactive widgets (e.g., swipe-to-start buttons).
+- Use `HapticFeedback` sparingly and only for meaningful user events (not decorative).
+- Sufficient color contrast — never use `AppColors.slate300` or lighter for text on white backgrounds.
+- Adequate hit targets: minimum 44×44 dp for interactive elements.
+
+---
+
+## 4. Widget Structure and Performance
+
+- Extract widgets when it improves readability or enables independent rebuilds — not based on line count alone.
+- Use `const` constructors and stable widget keys where they provide rebuild savings.
+- No expensive work in `build()`: no loops, no date parsing, no list transformations.
+- Use `ListView.builder` / `SliverList` for dynamic lists. Never `.map().toList()` inside a `Column` for large datasets.
+- Dispose all `AnimationController`, `TextEditingController`, `ScrollController`, `FocusNode`, and `StreamSubscription` in `dispose()`.
+- Use `AnimatedBuilder` or `AnimatedWidget` patterns for animation; avoid calling `setState` inside animation listeners.
+
+---
+
+## 5. Animations — flutter_animate Standard
+
+- All entry/exit animations use `flutter_animate`: `.animate()`, `.fadeIn()`, `.slideX()`, `.scale()`.
+- Duration range: `300ms` – `700ms`. Standard curve: `Curves.easeOutCubic`.
+- Do **not** add animations to widgets that had none unless the user requests it.
+- Do **not** remove or alter existing animations without explicit instruction.
+- Respect system reduced-motion preferences where possible.
+
+---
+
+## 6. Review Checklist (UI Tasks)
+
+Before marking UI work done:
+
+- [ ] All colors use `AppColors.*` tokens — zero raw hex.
+- [ ] All text uses `Theme.of(context).textTheme.*` — zero standalone `TextStyle`.
+- [ ] All icons use `Iconsax.*` — zero `Icons.*`.
+- [ ] All sizes use `.w`, `.h`, `.r`, `.sp` — zero raw numbers.
+- [ ] All user-facing strings use `tr(LocaleKeys.*)` — zero hardcoded text.
+- [ ] RTL/LTR layout uses directional APIs.
+- [ ] Loading, empty, and error states are handled.
+- [ ] Lifecycle (controllers, subscriptions) disposed correctly.
+- [ ] No expensive work inside `build()`.
