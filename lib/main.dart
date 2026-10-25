@@ -1,8 +1,10 @@
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'core/constants/app_constants.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/localization/language_manager.dart';
@@ -47,7 +49,10 @@ class E3lanakApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(AppConstants.designWidth, AppConstants.designHeight),
+      designSize: const Size(
+        AppConstants.designWidth,
+        AppConstants.designHeight,
+      ),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -60,6 +65,9 @@ class E3lanakApp extends StatelessWidget {
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
+          scrollBehavior: const ScrollBehavior().copyWith(
+            physics: const BouncingScrollPhysics(),
+          ),
           builder: (context, widget) {
             return Directionality(
               textDirection: LanguageManager.isRtl(context)

@@ -1,3 +1,4 @@
+import 'package:e3lanak_app/features/home/presentation/screens/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +12,9 @@ class FeedScreenPlaceholder extends StatelessWidget {
   const FeedScreenPlaceholder({super.key});
 
   @override
-  Widget build(BuildContext context) => const _NavigationTabPlaceholder(
-    titleKey: LocaleKeys.navHome,
-    icon: Iconsax.home_2,
-  );
+  Widget build(BuildContext context) => const HomeScreen();
 }
+
 
 class ExploreScreenPlaceholder extends StatelessWidget {
   const ExploreScreenPlaceholder({super.key});
