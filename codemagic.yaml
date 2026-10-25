@@ -1,0 +1,110 @@
+workflows:
+  ios-release-workflow:
+    name: iOS Sideloadly IPA Build
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+          source: true
+
+    scripts:
+      - name: Install dependencies & Configure Podfile
+        script: |
+          # 1. Fetch Flutter packages
+          flutter packages pub get
+
+          # 2. Generate Flutter iOS build configs (Generated.xcconfig)
+          flutter build ios --config-only --no-codesign
+
+          # 3. Create clean Podfile with code signing disabled for CocoaPods
+          cat > ios/Podfile << 'PODEOF'
+          platform :ios, '15.0'
+
+          ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+          project 'Runner', {
+            'Debug' => :debug,
+            'Profile' => :release,
+            'Release' => :release,
+          }
+
+          def flutter_root
+            generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+            unless File.exist?(generated_xcode_build_settings_path)
+              raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+            end
+
+            File.foreach(generated_xcode_build_settings_path) do |line|
+              matches = line.match(/FLUTTER_ROOT\=(.*)/)
+              return matches[1].strip if matches
+            end
+            raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig and running flutter pub get"
+          end
+
+          require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+          target 'Runner' do
+            use_frameworks!
+            use_modular_headers!
+            flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+          end
+
+          post_install do |installer|
+            installer.pods_project.targets.each do |target|
+              flutter_additional_ios_build_settings(target)
+              target.build_configurations.each do |config|
+                config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+                config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
+                config.build_settings['CODE_SIGN_IDENTITY'] = ''
+                config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ''
+              end
+            end
+          end
+          PODEOF
+
+          # 4. Install iOS CocoaPods
+          cd ios && pod install --repo-update && cd ..
+
+      - name: Build Unsigned iOS App
+        script: |
+          cd ios
+          xcodebuild \
+            -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+          cd ..
+
+      - name: Package IPA for Sideloadly
+        script: |
+          app_path="ios/build/Build/Products/Release-iphoneos/Runner.app"
+          if [ -d "$app_path" ]; then
+            echo "App built successfully! Packaging for Sideloadly..."
+            mkdir -p Payload
+            cp -r "$app_path" Payload/
+            zip -r -q Runner.ipa Payload
+            rm -rf Payload
+            echo "Packaging complete: Runner.ipa ready for download"
+            ls -lh Runner.ipa
+          else
+            echo "Error: App NOT found at $app_path"
+            exit 1
+          fi
+
+    artifacts:
+      - Runner.ipa
