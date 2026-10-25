@@ -6,6 +6,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
 
 /// Senior UI/UX Smart Marketing Tip Banner.
 ///
@@ -170,16 +171,10 @@ class MarketingTipBanner extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
                           onTap: () {
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    tr(LocaleKeys.creationFeatureComingSoon),
-                                  ),
-                                  duration: const Duration(seconds: 2),
-                                ),
-                              );
+                            AppSnackBar.showInfo(
+                              context,
+                              message: tr(LocaleKeys.creationFeatureComingSoon),
+                            );
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(

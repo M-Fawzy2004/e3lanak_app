@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
 
 class PlatformActionCard extends StatefulWidget {
   const PlatformActionCard({
@@ -79,16 +80,11 @@ class _PlatformActionCardState extends State<PlatformActionCard>
             onTap:
                 widget.onTap ??
                 () {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          '${tr(widget.titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
-                        ),
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
+                  AppSnackBar.showInfo(
+                    context,
+                    message:
+                        '${tr(widget.titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
+                  );
                 },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),

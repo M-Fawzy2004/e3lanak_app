@@ -8,6 +8,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
 
 class _RecentAdItem {
   const _RecentAdItem({
@@ -52,17 +53,6 @@ class RecentAdsSection extends StatelessWidget {
     ),
   ];
 
-  void _showSnack(BuildContext context, String message, int seconds) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(message),
-          duration: Duration(seconds: seconds),
-        ),
-      );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,10 +74,10 @@ class RecentAdsSection extends StatelessWidget {
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(20.r),
-                onTap: () => _showSnack(
+                onTap: () => AppSnackBar.showInfo(
                   context,
-                  '${tr(LocaleKeys.homeViewAll)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
-                  2,
+                  message:
+                      '${tr(LocaleKeys.homeViewAll)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
                 ),
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -121,14 +111,17 @@ class RecentAdsSection extends StatelessWidget {
               final item = _items[index];
               return _RecentAdCard(
                 item: item,
-                onTap: () => _showSnack(
+                onTap: () => AppSnackBar.showInfo(
                   context,
-                  '${tr(item.titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
-                  2,
+                  message:
+                      '${tr(item.titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
                 ),
                 onCopy: () {
                   Clipboard.setData(ClipboardData(text: tr(item.titleKey)));
-                  _showSnack(context, tr(LocaleKeys.copiedToClipboard), 1);
+                  AppSnackBar.showSuccess(
+                    context,
+                    message: tr(LocaleKeys.copiedToClipboard),
+                  );
                 },
               );
             },

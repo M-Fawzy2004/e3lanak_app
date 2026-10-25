@@ -1,9 +1,11 @@
+import 'package:e3lanak_app/core/theme/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+
 import '../../../../core/localization/locale_keys.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -40,21 +42,17 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
           Material(
-            color: AppColors.white,
+            color: AppColors.feedBackground,
             shape: const CircleBorder(),
             elevation: 2,
             shadowColor: AppColors.black.withValues(alpha: 0.08),
             child: InkWell(
               customBorder: const CircleBorder(),
               onTap: () {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(
-                      content: Text(tr(LocaleKeys.creationFeatureComingSoon)),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
+                AppSnackBar.showInfo(
+                  context,
+                  message: tr(LocaleKeys.creationFeatureComingSoon),
+                );
               },
               child: Padding(
                 padding: EdgeInsets.all(12.w),

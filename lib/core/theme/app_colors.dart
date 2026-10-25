@@ -33,7 +33,7 @@ abstract final class AppColors {
 
   // Background & Surface
   static const Color background = Colors.white;
-  static const Color feedBackground = Color.fromARGB(255, 255, 255, 255);
+  static const Color feedBackground = Color.fromARGB(255, 243, 243, 243);
   static const Color surface = Colors.white;
   static const Color border = Color(0xFFE2E8F0);
   static const Color divider = Color(0xFFE2E8F0);

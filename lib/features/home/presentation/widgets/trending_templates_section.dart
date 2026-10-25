@@ -7,6 +7,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
 
 class _TemplateItem {
   const _TemplateItem({
@@ -47,16 +48,10 @@ class TrendingTemplatesSection extends StatelessWidget {
   ];
 
   void _showComingSoon(BuildContext context, String titleKey) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            '${tr(titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
-          ),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+    AppSnackBar.showInfo(
+      context,
+      message: '${tr(titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
+    );
   }
 
   @override
@@ -84,7 +79,7 @@ class TrendingTemplatesSection extends StatelessWidget {
                 ),
               ),
               InkWell(
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(16.r),
                 onTap: () => _showComingSoon(context, LocaleKeys.homeViewAll),
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -93,7 +88,7 @@ class TrendingTemplatesSection extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.primarySurface,
-                    borderRadius: BorderRadius.circular(20.r),
+                    borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Text(
                     tr(LocaleKeys.homeViewAll),
@@ -165,7 +160,7 @@ class _TemplateCardState extends State<_TemplateCard> {
       child: Container(
         width: widget.width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22.r),
+          borderRadius: BorderRadius.circular(16.r),
           gradient: LinearGradient(
             begin: AlignmentDirectional.topStart,
             end: AlignmentDirectional.bottomEnd,
@@ -174,10 +169,10 @@ class _TemplateCardState extends State<_TemplateCard> {
         ),
         child: Material(
           color: AppColors.transparent,
-          borderRadius: BorderRadius.circular(22.r),
+          borderRadius: BorderRadius.circular(16.r),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            borderRadius: BorderRadius.circular(22.r),
+            borderRadius: BorderRadius.circular(16.r),
             onTap: widget.onTap,
             onTapDown: (_) => _setPressed(true),
             onTapCancel: () => _setPressed(false),

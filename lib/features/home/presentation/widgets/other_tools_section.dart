@@ -6,21 +6,56 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_top_snack_bar.dart';
+
+class _ToolItem {
+  const _ToolItem({
+    required this.icon,
+    required this.iconColor,
+    required this.iconBgColor,
+    required this.titleKey,
+    required this.descKey,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final Color iconBgColor;
+  final String titleKey;
+  final String descKey;
+}
 
 class OtherToolsSection extends StatelessWidget {
   const OtherToolsSection({super.key});
 
+  static const List<_ToolItem> _items = [
+    _ToolItem(
+      icon: Iconsax.clock,
+      iconColor: AppColors.primary,
+      iconBgColor: AppColors.primarySurface,
+      titleKey: LocaleKeys.homeToolHistoryTitle,
+      descKey: LocaleKeys.homeToolHistoryDesc,
+    ),
+    _ToolItem(
+      icon: Iconsax.heart,
+      iconColor: Color(0xFFEF4444),
+      iconBgColor: Color(0xFFFFEEF0),
+      titleKey: LocaleKeys.homeToolFavoritesTitle,
+      descKey: LocaleKeys.homeToolFavoritesDesc,
+    ),
+    _ToolItem(
+      icon: Iconsax.setting_2,
+      iconColor: AppColors.slate700,
+      iconBgColor: Color(0xFFF1F5F9),
+      titleKey: LocaleKeys.homeToolSettingsTitle,
+      descKey: LocaleKeys.homeToolSettingsDesc,
+    ),
+  ];
+
   void _showComingSoon(BuildContext context, String titleKey) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            '${tr(titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
-          ),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+    AppSnackBar.showInfo(
+      context,
+      message: '${tr(titleKey)} - ${tr(LocaleKeys.creationFeatureComingSoon)}',
+    );
   }
 
   @override
@@ -43,47 +78,15 @@ class OtherToolsSection extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: _ToolItemCard(
-                    icon: Iconsax.clock,
-                    iconColor: AppColors.primary,
-                    iconBgColor: AppColors.primarySurface,
-                    titleKey: LocaleKeys.homeToolHistoryTitle,
-                    descKey: LocaleKeys.homeToolHistoryDesc,
-                    onTap: () => _showComingSoon(
-                      context,
-                      LocaleKeys.homeToolHistoryTitle,
+                for (var i = 0; i < _items.length; i++) ...[
+                  if (i > 0) Gap(10.w),
+                  Expanded(
+                    child: _ToolItemCard(
+                      item: _items[i],
+                      onTap: () => _showComingSoon(context, _items[i].titleKey),
                     ),
                   ),
-                ),
-                Gap(10.w),
-                Expanded(
-                  child: _ToolItemCard(
-                    icon: Iconsax.heart,
-                    iconColor: const Color(0xFFEF4444),
-                    iconBgColor: const Color(0xFFFFEEF0),
-                    titleKey: LocaleKeys.homeToolFavoritesTitle,
-                    descKey: LocaleKeys.homeToolFavoritesDesc,
-                    onTap: () => _showComingSoon(
-                      context,
-                      LocaleKeys.homeToolFavoritesTitle,
-                    ),
-                  ),
-                ),
-                Gap(10.w),
-                Expanded(
-                  child: _ToolItemCard(
-                    icon: Iconsax.setting_2,
-                    iconColor: AppColors.slate700,
-                    iconBgColor: const Color(0xFFF1F5F9),
-                    titleKey: LocaleKeys.homeToolSettingsTitle,
-                    descKey: LocaleKeys.homeToolSettingsDesc,
-                    onTap: () => _showComingSoon(
-                      context,
-                      LocaleKeys.homeToolSettingsTitle,
-                    ),
-                  ),
-                ),
+                ],
               ],
             ),
           ),
@@ -94,20 +97,9 @@ class OtherToolsSection extends StatelessWidget {
 }
 
 class _ToolItemCard extends StatelessWidget {
-  const _ToolItemCard({
-    required this.icon,
-    required this.iconColor,
-    required this.iconBgColor,
-    required this.titleKey,
-    required this.descKey,
-    required this.onTap,
-  });
+  const _ToolItemCard({required this.item, required this.onTap});
 
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBgColor;
-  final String titleKey;
-  final String descKey;
+  final _ToolItem item;
   final VoidCallback onTap;
 
   @override
@@ -115,22 +107,15 @@ class _ToolItemCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.slate400.withValues(alpha: 0.16)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.05),
-            blurRadius: 14.r,
-            offset: Offset(0, 5.h),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: AppColors.slate400.withValues(alpha: 0.18)),
       ),
       child: Material(
         color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(16.r),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(16.r),
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 14.h),
@@ -142,14 +127,14 @@ class _ToolItemCard extends StatelessWidget {
                   width: 46.w,
                   height: 46.w,
                   decoration: BoxDecoration(
-                    color: iconBgColor,
-                    borderRadius: BorderRadius.circular(16.r),
+                    color: item.iconBgColor,
+                    borderRadius: BorderRadius.circular(14.r),
                   ),
-                  child: Icon(icon, size: 22.sp, color: iconColor),
+                  child: Icon(item.icon, size: 22.sp, color: item.iconColor),
                 ),
                 Gap(10.h),
                 Text(
-                  tr(titleKey),
+                  tr(item.titleKey),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -162,7 +147,7 @@ class _ToolItemCard extends StatelessWidget {
                 ),
                 Gap(3.h),
                 Text(
-                  tr(descKey),
+                  tr(item.descKey),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
