@@ -1,0 +1,59 @@
+{
+  "app": {
+    "title": "إعلانك",
+    "tagline": "منصة صناعة الإعلانات الذكية بالذكاء الاصطناعي",
+    "description": "أنشئ إعلانات تسويقية احترافية لمنتجاتك بنقرة زر واحدة"
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "copy": "نسخ",
+    "share": "مشاركة",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "back": "رجوع",
+    "next": "التالي",
+    "retry": "إعادة المحاولة",
+    "loading": "جاري التحميل...",
+    "success": "تم بنجاح",
+    "error": "حدث خطأ ما",
+    "copied_to_clipboard": "تم النسخ إلى الحافظة",
+    "no_internet": "لا يوجد اتصال بالإنترنت"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "ad_generator": "إنشاء إعلان",
+    "feed": "المجتمع",
+    "history": "السجل",
+    "subscription": "الاشتراكات",
+    "settings": "الإعدادات"
+  },
+  "ad_generator": {
+    "step_upload": "رفع الصور",
+    "step_upload_desc": "ارفع صورة المنتج أو اخترها من المعرض",
+    "step_details": "تفاصيل المنتج",
+    "step_details_desc": "أدخل اسم ومواصفات المنتج وسعره",
+    "step_tone": "نبرة الصوت",
+    "step_tone_desc": "اختر النبرة التسويقية المناسبة لجمهورك",
+    "step_generate": "إنشاء الإعلان",
+    "step_generate_desc": "توليد نصوص إعلانية جذابة بالذكاء الاصطناعي",
+    "upload_image_action": "رفع صورة المنتج",
+    "select_from_gallery": "اختيار من المعرض",
+    "take_photo": "التقاط صورة",
+    "product_name_hint": "اسم المنتج أو الخدمة",
+    "product_description_hint": "وصف ومميزات المنتج",
+    "product_price_hint": "السعر (اختياري)",
+    "tone_persuasive": "إقناعي ومحفز للشراء",
+    "tone_formal": "رسمي واحترافي",
+    "tone_friendly": "ودي وقريب للجمهور",
+    "tone_urgent": "عاجل ومحدود المدة",
+    "generate_action": "توليد الإعلان الآن",
+    "generating_status": "جاري صياغة إعلانك بالذكاء الاصطناعي...",
+    "generation_complete": "تم توليد الإعلان بنجاح!"
+  },
+  "splash": {
+    "welcome": "أهلاً بك في إعلانك",
+    "loading_ready": "جاري تهيئة المنصة..."
+  }
+}

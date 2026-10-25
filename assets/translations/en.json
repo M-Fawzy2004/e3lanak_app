@@ -1,0 +1,59 @@
+{
+  "app": {
+    "title": "E3lanak",
+    "tagline": "AI-Powered Smart Ad Creation Platform",
+    "description": "Create professional marketing ads for your products with a single tap"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "share": "Share",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "retry": "Retry",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "An error occurred",
+    "copied_to_clipboard": "Copied to clipboard",
+    "no_internet": "No internet connection"
+  },
+  "navigation": {
+    "home": "Home",
+    "ad_generator": "Create Ad",
+    "feed": "Community",
+    "history": "History",
+    "subscription": "Subscription",
+    "settings": "Settings"
+  },
+  "ad_generator": {
+    "step_upload": "Upload Images",
+    "step_upload_desc": "Upload product photos or select from gallery",
+    "step_details": "Product Details",
+    "step_details_desc": "Enter product name, features, and pricing",
+    "step_tone": "Brand Tone",
+    "step_tone_desc": "Choose the marketing tone that resonates with your audience",
+    "step_generate": "Generate Ad",
+    "step_generate_desc": "Generate compelling ad copy powered by AI",
+    "upload_image_action": "Upload Product Photo",
+    "select_from_gallery": "Choose from Gallery",
+    "take_photo": "Take Photo",
+    "product_name_hint": "Product or service name",
+    "product_description_hint": "Product description & key benefits",
+    "product_price_hint": "Price (optional)",
+    "tone_persuasive": "Persuasive & High Converting",
+    "tone_formal": "Formal & Professional",
+    "tone_friendly": "Friendly & Engaging",
+    "tone_urgent": "Urgent & Limited-Time",
+    "generate_action": "Generate Ad Now",
+    "generating_status": "AI is crafting your high-converting ad...",
+    "generation_complete": "Ad generated successfully!"
+  },
+  "splash": {
+    "welcome": "Welcome to E3lanak",
+    "loading_ready": "Preparing the platform..."
+  }
+}

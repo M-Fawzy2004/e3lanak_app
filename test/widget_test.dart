@@ -1,30 +1,41 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:e3lanak_app/main.dart';
+import 'package:e3lanak_app/core/constants/app_constants.dart';
+import 'package:e3lanak_app/core/theme/app_colors.dart';
+import 'package:e3lanak_app/core/localization/language_manager.dart';
+import 'package:e3lanak_app/core/errors/failures.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Bootstrap & Core Configuration Tests', () {
+    test('AppConstants contains expected baseline configuration', () {
+      expect(AppConstants.appName, 'E3lanak');
+      expect(AppConstants.designWidth, 390.0);
+      expect(AppConstants.designHeight, 844.0);
+      expect(AppConstants.arabicLocaleCode, 'ar');
+      expect(AppConstants.englishLocaleCode, 'en');
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test('AppColors tokens define emerald primary and dark background', () {
+      expect(AppColors.primary, const Color(0xFF10B981));
+      expect(AppColors.primaryDark, const Color(0xFF059669));
+      expect(AppColors.darkBackground, const Color(0xFF0F172A));
+      expect(AppColors.darkSurface, const Color(0xFF1E293B));
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('LanguageManager specifies Arabic as primary supported locale', () {
+      expect(LanguageManager.arabicLocale, const Locale('ar'));
+      expect(LanguageManager.englishLocale, const Locale('en'));
+      expect(LanguageManager.supportedLocales.length, 2);
+      expect(LanguageManager.supportedLocales.first, const Locale('ar'));
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('Failures support equality and custom messaging', () {
+      const failure1 = ServerFailure(message: 'Server Error', statusCode: 500);
+      const failure2 = ServerFailure(message: 'Server Error', statusCode: 500);
+      const failure3 = ServerFailure(message: 'Other Error', statusCode: 400);
+
+      expect(failure1, equals(failure2));
+      expect(failure1 == failure3, isFalse);
+    });
   });
 }
