@@ -3,6 +3,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../network/network_info.dart';
 import '../network/supabase_client_wrapper.dart';
+import '../../features/ad_generator/data/datasources/ad_image_picker_datasource.dart';
+import '../../features/ad_generator/data/repositories/ad_image_repository_impl.dart';
+import '../../features/ad_generator/domain/repositories/ad_image_repository.dart';
+import '../../features/ad_generator/domain/usecases/capture_ad_photo_usecase.dart';
+import '../../features/ad_generator/domain/usecases/pick_ad_images_usecase.dart';
+import '../../features/ad_generator/presentation/controllers/ad_step1_cubit.dart';
 
 /// Global Service Locator instance
 final sl = GetIt.instance;
@@ -37,7 +43,27 @@ void _initAuthFeature() {
 }
 
 void _initAdGeneratorFeature() {
-  // Ad generator feature registrations will be added as features are implemented
+  // Data sources
+  sl.registerLazySingleton<AdImagePickerDataSource>(
+    () => AdImagePickerDataSourceImpl(),
+  );
+
+  // Repositories
+  sl.registerLazySingleton<AdImageRepository>(
+    () => AdImageRepositoryImpl(dataSource: sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => PickAdImagesUseCase(sl()));
+  sl.registerLazySingleton(() => CaptureAdPhotoUseCase(sl()));
+
+  // Cubits / Controllers
+  sl.registerFactory(
+    () => AdStep1Cubit(
+      pickImagesUseCase: sl(),
+      capturePhotoUseCase: sl(),
+    ),
+  );
 }
 
 void _initFeedFeature() {

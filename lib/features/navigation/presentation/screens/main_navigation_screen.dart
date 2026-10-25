@@ -9,6 +9,7 @@ import 'package:gap/gap.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../core/localization/locale_keys.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_top_snack_bar.dart';
 import 'navigation_tab_placeholders.dart';
@@ -80,10 +81,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
 
     if (!mounted || selectedAction == null) return;
 
-    AppSnackBar.showInfo(
-      context,
-      message: tr(LocaleKeys.creationFeatureComingSoon),
-    );
+    if (selectedAction == _CreateAction.aiAd) {
+      unawaited(Navigator.of(context).pushNamed(AppRoutes.adGeneratorStep1));
+    } else {
+      AppSnackBar.showInfo(
+        context,
+        message: tr(LocaleKeys.creationFeatureComingSoon),
+      );
+    }
   }
 
   Widget _buildBottomAppBar(BuildContext context) {

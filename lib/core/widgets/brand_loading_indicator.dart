@@ -87,7 +87,7 @@ class _BrandLoadingIndicatorState extends State<BrandLoadingIndicator>
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text.rich(
-                    TextSpan(
+                    const TextSpan(
                       children: [
                         TextSpan(
                           text: 'E',

@@ -42,6 +42,25 @@ abstract final class LocaleKeys {
       'navigation.creation_feature_coming_soon';
 
   // Ad Generator Steps & Actions
+  static const String adStep1Title = 'ad_generator.step1_title';
+  static const String adStep1Subtitle = 'ad_generator.step1_subtitle';
+  static const String adUploadBoxClick = 'ad_generator.upload_box_click';
+  static const String adUploadBoxDrag = 'ad_generator.upload_box_drag';
+  static const String adTakePhotoCamera = 'ad_generator.take_photo_camera';
+  static const String adImagesAdded = 'ad_generator.images_added';
+  static const String adPhotoCaptured = 'ad_generator.photo_captured';
+  static const String adGalleryError = 'ad_generator.gallery_error';
+  static const String adCameraError = 'ad_generator.camera_error';
+  static const String adPrimaryImage = 'ad_generator.primary_image';
+  static const String adChangeImage = 'ad_generator.change_image';
+  static const String adNextStepUnavailable =
+      'ad_generator.next_step_unavailable';
+  static const String adSelectedImagesTitle =
+      'ad_generator.selected_images_title';
+  static const String adMaxImagesLimit = 'ad_generator.max_images_limit';
+  static const String adSelectAtLeastOneImage =
+      'ad_generator.select_at_least_one_image';
+
   static const String adStepUpload = 'ad_generator.step_upload';
   static const String adStepUploadDesc = 'ad_generator.step_upload_desc';
   static const String adStepDetails = 'ad_generator.step_details';

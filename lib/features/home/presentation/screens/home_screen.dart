@@ -46,8 +46,8 @@ class HomeScreen extends StatelessWidget {
                 crossAxisSpacing: 12.w,
                 mainAxisSpacing: 12.h,
                 childAspectRatio: 1.1,
-                children: [
-                  const PlatformActionCard(
+                children: const [
+                  PlatformActionCard(
                     assetPath: AppAssets.iconFacebook,
                     titleKey: LocaleKeys.homeActionFacebookTitle,
                     descKey: LocaleKeys.homeActionFacebookDesc,
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                       Color(0xFF1877F2),
                     ],
                   ),
-                  const PlatformActionCard(
+                  PlatformActionCard(
                     assetPath: AppAssets.iconTiktok,
                     titleKey: LocaleKeys.homeActionTiktokTitle,
                     descKey: LocaleKeys.homeActionTiktokDesc,
@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                       Color(0xFFFE2C55),
                     ],
                   ),
-                  const PlatformActionCard(
+                  PlatformActionCard(
                     assetPath: AppAssets.iconWhatsapp,
                     titleKey: LocaleKeys.homeActionWhatsappTitle,
                     descKey: LocaleKeys.homeActionWhatsappDesc,
@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                       Color(0xFF25D366),
                     ],
                   ),
-                  const PlatformActionCard(
+                  PlatformActionCard(
                     assetPath: AppAssets.iconInstagram,
                     titleKey: LocaleKeys.homeActionInstagramTitle,
                     descKey: LocaleKeys.homeActionInstagramDesc,
