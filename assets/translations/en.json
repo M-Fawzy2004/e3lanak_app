@@ -57,5 +57,10 @@
     "welcome": "Welcome to E3lanak",
     "loading_ready": "Preparing the platform...",
     "slogan": "Every ad... starts here"
+  },
+  "onboarding": {
+    "title": "Ads that help your products sell more",
+    "description": "Turn product photos into polished ads that capture attention and help your business grow.",
+    "get_started": "Get started"
   }
 }

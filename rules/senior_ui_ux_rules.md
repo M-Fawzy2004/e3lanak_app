@@ -8,6 +8,7 @@ Build interfaces that are consistent with the product design system, work across
 - Use shared colors, spacing, typography, radii, and component patterns where available. Add a token only when it represents a reusable design decision.
 - For screenshot/reference work, match hierarchy, alignment, sizing, color, and spacing against the provided reference while preserving responsive behavior.
 - Avoid decorative effects that reduce contrast, legibility, or performance. Do not add shadows, gradients, animation, or haptics without a design or interaction purpose.
+- Use `iconsax_flutter` (`Iconsax`) as the standard icon library for application UI. Do not use Material `Icons`, emoji, or Unicode symbols for product interface icons. Choose the closest semantic Iconsax glyph and keep icon weight/style consistent within each component; retain platform-native icons only when a platform control requires them.
 
 ## 2. Responsive layout and localization
 

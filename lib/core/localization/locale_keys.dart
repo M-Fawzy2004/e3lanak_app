@@ -62,4 +62,9 @@ abstract final class LocaleKeys {
   static const String splashWelcome = 'splash.welcome';
   static const String splashLoadingReady = 'splash.loading_ready';
   static const String splashSlogan = 'splash.slogan';
+
+  // Onboarding
+  static const String onboardingTitle = 'onboarding.title';
+  static const String onboardingDescription = 'onboarding.description';
+  static const String onboardingGetStarted = 'onboarding.get_started';
 }

@@ -20,6 +20,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.17
+  iconsax_flutter: ^1.0.1
   shimmer: ^3.0.0
   cached_network_image: ^3.4.1
   gap: ^3.0.1

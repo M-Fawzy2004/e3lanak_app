@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 import 'app_typography.dart';
 import '../constants/app_constants.dart';
+import '../localization/language_manager.dart';
 
 /// Single source of truth for Application ThemeData (Light & Dark).
 /// Configured for Royal Blue (#0D5EF4), Slate neutrals, and Accent Yellow (#FFB800).
@@ -17,7 +18,7 @@ abstract final class AppTheme {
         ? AppColors.textPrimary
         : AppColors.slate100;
 
-    final isArabic = locale.languageCode == AppConstants.arabicLocaleCode;
+    final isArabic = LanguageManager.isArabicLocale(locale);
     return isArabic
         ? AppTypography.arabicTextTheme(textColor)
         : AppTypography.englishTextTheme(textColor);
@@ -68,7 +69,7 @@ abstract final class AppTheme {
       brightness: Brightness.light,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.background,
-      fontFamily: locale.languageCode == AppConstants.arabicLocaleCode
+      fontFamily: LanguageManager.isArabicLocale(locale)
           ? AppTypography.arabicFontFamily
           : AppTypography.englishFontFamily,
       textTheme: textTheme,
@@ -193,7 +194,7 @@ abstract final class AppTheme {
       brightness: Brightness.dark,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.darkBackground,
-      fontFamily: locale.languageCode == AppConstants.arabicLocaleCode
+      fontFamily: LanguageManager.isArabicLocale(locale)
           ? AppTypography.arabicFontFamily
           : AppTypography.englishFontFamily,
       textTheme: textTheme,
