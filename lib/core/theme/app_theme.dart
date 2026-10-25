@@ -5,7 +5,8 @@ import 'app_typography.dart';
 import '../constants/app_constants.dart';
 
 /// Single source of truth for Application ThemeData (Light & Dark).
-/// Dynamically adjusts typography based on current locale (Arabic -> Cairo, English -> Inter).
+/// Configured for Royal Blue (#0D5EF4), Slate neutrals, and Accent Yellow (#FFB800).
+/// Dynamically adjusts typography based on current locale (Arabic -> Tajawal, English -> Plus Jakarta Sans).
 abstract final class AppTheme {
   /// Resolves the TextTheme based on locale and brightness.
   static TextTheme _resolveTextTheme({
@@ -13,7 +14,7 @@ abstract final class AppTheme {
     required Brightness brightness,
   }) {
     final textColor = brightness == Brightness.light
-        ? AppColors.slate800
+        ? AppColors.textPrimary
         : AppColors.slate100;
 
     final isArabic = locale.languageCode == AppConstants.arabicLocaleCode;
@@ -22,49 +23,74 @@ abstract final class AppTheme {
         : AppTypography.englishTextTheme(textColor);
   }
 
-  /// Builds the Light Theme with modern Emerald and Slate styling.
+  /// High-conversion secondary button style using Accent Yellow with dark neutral text.
+  static ButtonStyle secondaryButtonStyle({EdgeInsetsGeometry? padding}) {
+    return ElevatedButton.styleFrom(
+      backgroundColor: AppColors.secondary,
+      foregroundColor: AppColors.darkNeutral,
+      disabledBackgroundColor: AppColors.slate300,
+      disabledForegroundColor: AppColors.slate500,
+      elevation: 0,
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      textStyle: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  /// Builds the Light Theme with modern Royal Blue, Slate, and Accent Yellow styling.
   static ThemeData lightTheme([Locale locale = const Locale(AppConstants.arabicLocaleCode)]) {
     final textTheme = _resolveTextTheme(locale: locale, brightness: Brightness.light);
+
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
+      primary: AppColors.primary,
+      onPrimary: AppColors.white,
+      primaryContainer: AppColors.primaryContainer,
+      onPrimaryContainer: AppColors.primaryDark,
+      secondary: AppColors.secondary,
+      onSecondary: AppColors.darkNeutral,
+      secondaryContainer: AppColors.accentSurface,
+      onSecondaryContainer: AppColors.accentDark,
+      surface: AppColors.surface,
+      onSurface: AppColors.textPrimary,
+      error: AppColors.error,
+      onError: AppColors.white,
+    );
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.slate50,
+      scaffoldBackgroundColor: AppColors.background,
       fontFamily: locale.languageCode == AppConstants.arabicLocaleCode
           ? AppTypography.arabicFontFamily
           : AppTypography.englishFontFamily,
       textTheme: textTheme,
-      colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        onPrimary: AppColors.white,
-        primaryContainer: AppColors.primarySurface,
-        onPrimaryContainer: AppColors.primaryDark,
-        secondary: AppColors.primaryDark,
-        onSecondary: AppColors.white,
-        surface: AppColors.white,
-        onSurface: AppColors.slate800,
-        error: AppColors.error,
-        onError: AppColors.white,
-      ),
+      colorScheme: colorScheme,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.slate50,
+        backgroundColor: AppColors.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: textTheme.titleLarge?.copyWith(
-          color: AppColors.slate900,
+          color: AppColors.textPrimary,
           fontWeight: FontWeight.bold,
         ),
-        iconTheme: const IconThemeData(color: AppColors.slate800),
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
       ),
       cardTheme: CardThemeData(
-        color: AppColors.white,
+        color: AppColors.surface,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
-          side: const BorderSide(color: AppColors.slate200, width: 1),
+          side: const BorderSide(color: AppColors.border, width: 1),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -83,9 +109,24 @@ abstract final class AppTheme {
           ),
         ),
       ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.secondary,
+          foregroundColor: AppColors.darkNeutral,
+          disabledBackgroundColor: AppColors.slate300,
+          disabledForegroundColor: AppColors.slate500,
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          textStyle: textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primaryDark,
+          foregroundColor: AppColors.primary,
           side: const BorderSide(color: AppColors.primary, width: 1.5),
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
           shape: RoundedRectangleBorder(
@@ -99,7 +140,7 @@ abstract final class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.slate100,
-        hintStyle: textTheme.bodyMedium?.copyWith(color: AppColors.slate400),
+        hintStyle: textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -107,7 +148,7 @@ abstract final class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: AppColors.slate200, width: 1),
+          borderSide: const BorderSide(color: AppColors.border, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -119,16 +160,33 @@ abstract final class AppTheme {
         ),
       ),
       dividerTheme: const DividerThemeData(
-        color: AppColors.slate200,
+        color: AppColors.divider,
         thickness: 1,
         space: 1,
       ),
     );
   }
 
-  /// Builds the Dark Theme with deep slate surfaces and vibrant emerald accents.
+  /// Builds the Dark Theme with deep slate surfaces, royal blue accents, and yellow highlights.
   static ThemeData darkTheme([Locale locale = const Locale(AppConstants.arabicLocaleCode)]) {
     final textTheme = _resolveTextTheme(locale: locale, brightness: Brightness.dark);
+
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.dark,
+      primary: AppColors.primary,
+      onPrimary: AppColors.white,
+      primaryContainer: AppColors.darkCardElevated,
+      onPrimaryContainer: AppColors.primaryLight,
+      secondary: AppColors.secondary,
+      onSecondary: AppColors.darkNeutral,
+      secondaryContainer: AppColors.accentDark,
+      onSecondaryContainer: AppColors.accentLight,
+      surface: AppColors.darkSurface,
+      onSurface: AppColors.slate100,
+      error: AppColors.error,
+      onError: AppColors.white,
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -139,18 +197,7 @@ abstract final class AppTheme {
           ? AppTypography.arabicFontFamily
           : AppTypography.englishFontFamily,
       textTheme: textTheme,
-      colorScheme: const ColorScheme.dark(
-        primary: AppColors.primary,
-        onPrimary: AppColors.white,
-        primaryContainer: AppColors.darkCardElevated,
-        onPrimaryContainer: AppColors.primaryLight,
-        secondary: AppColors.primaryLight,
-        onSecondary: AppColors.darkBackground,
-        surface: AppColors.darkSurface,
-        onSurface: AppColors.slate100,
-        error: AppColors.error,
-        onError: AppColors.white,
-      ),
+      colorScheme: colorScheme,
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.darkBackground,
         surfaceTintColor: Colors.transparent,
@@ -178,6 +225,21 @@ abstract final class AppTheme {
           disabledBackgroundColor: AppColors.darkBorder,
           disabledForegroundColor: AppColors.slate500,
           elevation: 0,
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          textStyle: textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.secondary,
+          foregroundColor: AppColors.darkNeutral,
+          disabledBackgroundColor: AppColors.darkBorder,
+          disabledForegroundColor: AppColors.slate500,
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
