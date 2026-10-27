@@ -2,6 +2,7 @@
 abstract final class AppAssets {
   // Images
   static const String splashLogo = 'assets/images/splash_logo.png';
+  static const String authImage = 'assets/images/auth_image.png';
 
   // Platform & Feature Icons
   static const String iconFacebook = 'assets/icons/facebook.png';

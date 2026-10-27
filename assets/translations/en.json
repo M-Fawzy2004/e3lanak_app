@@ -164,6 +164,18 @@
     "status_ready": "Ready to copy",
     "status_draft": "Draft",
     "view_all": "View All"
+  },
+  "auth": {
+    "title": "E3lanak",
+    "subtitle": "Start writing and publishing your ads with a single tap",
+    "sign_in_prompt": "Sign in to continue and save your ads",
+    "continue_with_google": "Continue with Google",
+    "continue_with_apple": "Continue with Apple",
+    "browse_as_guest": "Browse as guest",
+    "terms_notice": "By continuing, you agree to the Terms of Service and Privacy Policy.",
+    "error_google": "Could not sign in with Google, please try again later",
+    "error_apple": "Could not sign in with Apple, please try again later",
+    "error_generic": "An unexpected error occurred during sign in, please try again"
   }
 }
 

@@ -186,5 +186,17 @@ abstract final class LocaleKeys {
   static const String homeStatusReady = 'home.status_ready';
   static const String homeStatusDraft = 'home.status_draft';
   static const String homeViewAll = 'home.view_all';
+
+  // Auth Screen
+  static const String authTitle = 'auth.title';
+  static const String authSubtitle = 'auth.subtitle';
+  static const String authSignInPrompt = 'auth.sign_in_prompt';
+  static const String authContinueWithGoogle = 'auth.continue_with_google';
+  static const String authContinueWithApple = 'auth.continue_with_apple';
+  static const String authBrowseAsGuest = 'auth.browse_as_guest';
+  static const String authTermsNotice = 'auth.terms_notice';
+  static const String authErrorGoogle = 'auth.error_google';
+  static const String authErrorApple = 'auth.error_apple';
+  static const String authErrorGeneric = 'auth.error_generic';
 }
 

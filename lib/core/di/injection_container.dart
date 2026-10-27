@@ -12,6 +12,13 @@ import '../../features/ad_generator/presentation/controllers/ad_step1_cubit.dart
 import '../../features/ad_generator/presentation/controllers/ad_step2_cubit.dart';
 import '../../features/ad_generator/presentation/controllers/ad_step3_cubit.dart';
 
+import '../../features/auth/data/datasources/auth_remote_datasource.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/domain/repositories/auth_repository.dart';
+import '../../features/auth/domain/usecases/sign_in_with_apple_usecase.dart';
+import '../../features/auth/domain/usecases/sign_in_with_google_usecase.dart';
+import '../../features/auth/presentation/controllers/auth_cubit.dart';
+
 /// Global Service Locator instance
 final sl = GetIt.instance;
 
@@ -41,7 +48,30 @@ Future<void> init() async {
 }
 
 void _initAuthFeature() {
-  // Auth feature registrations will be added as features are implemented
+  // Data source
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(supabase: sl()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      dataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => SignInWithGoogleUseCase(sl()));
+  sl.registerLazySingleton(() => SignInWithAppleUseCase(sl()));
+
+  // Cubit
+  sl.registerFactory(
+    () => AuthCubit(
+      signInWithGoogleUseCase: sl(),
+      signInWithAppleUseCase: sl(),
+    ),
+  );
 }
 
 void _initAdGeneratorFeature() {

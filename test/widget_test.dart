@@ -23,7 +23,7 @@ void main() {
       expect(AppColors.darkNeutral, const Color(0xFF0F172A));
       expect(AppColors.textPrimary, const Color(0xFF0F172A));
       expect(AppColors.textSecondary, const Color(0xFF64748B));
-      expect(AppColors.background, const Color(0xFFF8FAFC));
+      expect(AppColors.background, Colors.white);
       expect(AppColors.border, const Color(0xFFE2E8F0));
       expect(AppColors.surface, Colors.white);
       expect(AppColors.darkBackground, const Color(0xFF0F172A));
